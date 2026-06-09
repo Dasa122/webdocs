@@ -6,6 +6,7 @@ const navItems = [
   { label: 'Összehasonlítás', href: '/#osszehasonlitas' },
   { label: 'Forgalmazóink', href: '/#forgalmazoink' },
   { label: 'Kapcsolat', href: '/#kapcsolat' },
+  { label: '📚 Dokumentáció', href: '/docs' },
 ];
 
 export default function Navbar() {

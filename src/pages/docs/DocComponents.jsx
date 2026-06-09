@@ -41,8 +41,8 @@ export function ExampleBox({ children, label }) {
 
 export function DocSection({ id, title, children }) {
   return (
-    <section id={id} className="mb-5 pb-3 border-bottom">
-      <h2 className="mb-4">{title}</h2>
+    <section id={id} style={{ marginBottom: '3.5rem', paddingBottom: '2rem', borderBottom: '1px solid #e2e8f0' }}>
+      <h2>{title}</h2>
       {children}
     </section>
   );

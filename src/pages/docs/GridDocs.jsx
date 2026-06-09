@@ -2,105 +2,30 @@ import { DocSection, CodeBlock, ExampleBox } from './DocComponents';
 
 export default function GridDocs() {
   return (
-    <DocSection id="grid" title="📐 Bootstrap Grid Rendszer">
-      <p>
-        A Bootstrap 12-oszlopos grid rendszere reszponzív elrendezések építésére.
-        Az alábbi töréspontok érhetők el:
-      </p>
+    <DocSection id="grid" title="📐 Grid & Konténer">
+      <p>A Bootstrap 12-oszlopos grid rendszere. A <code>.container</code> középre zárt, fix szélességű dobozt hoz létre.</p>
 
-      <div className="table-responsive mb-4">
-        <table className="table table-bordered table-sm">
-          <thead className="table-light">
-            <tr><th>Prefix</th><th>Min. szélesség</th><th>Leírás</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>col-*</code></td><td>&lt; 576px</td><td>Mobil elsődleges</td></tr>
-            <tr><td><code>col-sm-*</code></td><td>≥ 576px</td><td>✅ Gyakori (alap elrendezés)</td></tr>
-            <tr><td><code>col-md-*</code></td><td>≥ 768px</td><td>✅ Gyakori (tablet, kisebb desktop)</td></tr>
-            <tr><td><code>col-lg-*</code></td><td>≥ 992px</td><td>✅ Használt (desktop, navbar)</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h4>4 Oszlopos Rács</h4>
-      <p>
-        Gyakori minta: mobil nézetben 2 oszlop (<code>col-sm-6</code>),
-        asztali nézetben 4 oszlop (<code>col-md-3</code>).
-      </p>
+      <h4>.container — a teljes oldal kerete</h4>
       <CodeBlock
-        label="Használat: index.html"
-        code={`<div class="row" id="napi_ajanlataink">\n  <div class="col-sm-12">\n    <h3>Napi ajánlataink</h3>\n  </div>\n  <!-- 4 termék, mobil: 2 oszlop, asztali: 4 oszlop -->\n  <div class="col-sm-6 col-md-3 mb-3">\n    <h3 class="text-warning">ASUS</h3>\n    <img src="" class="img-fluid" alt="Termék">\n    <p class="akcio">64 999 Ft-tól</p>\n  </div>\n  <div class="col-sm-6 col-md-3 mb-3">\n    <h3 class="text-danger">UMAX</h3>\n    <img src="" class="img-fluid" alt="Termék">\n    <p class="akcio">65 240 Ft-tól</p>\n  </div>\n  <div class="col-sm-6 col-md-3 mb-3">\n    <h3 class="text-success">Apple</h3>\n    <img src="" class="img-fluid" alt="Termék">\n    <p class="akcio">869 999 Ft-tól</p>\n  </div>\n  <div class="col-sm-6 col-md-3 mb-3">\n    <h3 class="text-primary">Intel</h3>\n    <img src="" class="img-fluid" alt="Termék">\n    <p class="akcio">92 170 Ft-tól</p>\n  </div>\n</div>`}
+        label="index.html"
+        code={`<div class="container">\n  <div class="row">\n    <div class="col-sm-12 cellaHatter">\n      <!-- tartalom -->\n    </div>\n  </div>\n</div>`}
       />
-      <ExampleBox label="Előnézet">
-        <div className="row text-center">
-          <div className="col-sm-6 col-md-3 mb-2">
-            <div className="bg-light border p-3">
-              <h5 className="text-warning">ASUS</h5>
-              <div className="bg-secondary rounded" style={{ height: 80 }} />
-              <small className="text-danger fw-bold">64 999 Ft</small>
-            </div>
-          </div>
-          <div className="col-sm-6 col-md-3 mb-2">
-            <div className="bg-light border p-3">
-              <h5 className="text-danger">UMAX</h5>
-              <div className="bg-secondary rounded" style={{ height: 80 }} />
-              <small className="text-danger fw-bold">65 240 Ft</small>
-            </div>
-          </div>
-          <div className="col-sm-6 col-md-3 mb-2">
-            <div className="bg-light border p-3">
-              <h5 className="text-success">Apple</h5>
-              <div className="bg-secondary rounded" style={{ height: 80 }} />
-              <small className="text-danger fw-bold">869 999 Ft</small>
-            </div>
-          </div>
-          <div className="col-sm-6 col-md-3 mb-2">
-            <div className="bg-light border p-3">
-              <h5 className="text-primary">Intel</h5>
-              <div className="bg-secondary rounded" style={{ height: 80 }} />
-              <small className="text-danger fw-bold">92 170 Ft</small>
-            </div>
-          </div>
+
+      <h4>Reszponzív oszlopok — col-sm-*, col-md-*, col-lg-*</h4>
+      <p>A fájlban három különböző töréspont kombináció látható:</p>
+      <CodeBlock
+        label="index.html — 3 féle grid minta"
+        code={`<!-- 1. Reszponzív 3-oszlop: mobil 8+4, tablet 6+6, desktop 2+10 -->\n<div class="col-sm-8 col-md-6 col-lg-2">...</div>\n<div class="col-sm-4 col-md-6 col-lg-10">...</div>\n\n<!-- 2. Reszponzív 3-oszlop: mobil 4+4+4, tablet 3+6+3 -->\n<div class="col-sm-4 col-md-3">1.</div>\n<div class="col-sm-4 col-md-6">2.</div>\n<div class="col-sm-4 col-md-3">3.</div>\n\n<!-- 3. Képgaléria: mobil 4+4+4, tablet 2+2+2 -->\n<div class="col-sm-4 col-md-2">\n  <img class="img-fluid w-100" src="kep.jpg" alt="">\n</div>`}
+      />
+      <ExampleBox label="Előnézet — Reszponzív 3 oszlop">
+        <div className="row text-center small">
+          <div className="col-sm-8 col-md-6 col-lg-2 mb-1"><div className="bg-primary text-white rounded p-2">col-sm-8<br/>col-md-6<br/>col-lg-2</div></div>
+          <div className="col-sm-4 col-md-6 col-lg-10 mb-1"><div className="bg-success text-white rounded p-2">col-sm-4<br/>col-md-6<br/>col-lg-10</div></div>
         </div>
-      </ExampleBox>
-
-      <h4>3 Oszlopos Képgaléria</h4>
-      <p>Hat kép elrendezése: mobil nézetben 3 oszlop, asztali nézetben 6 oszlop.</p>
-      <CodeBlock
-        label="Képgaléria rács"
-        code={`<div class="row">\n  <div class="col-sm-4 col-md-2">\n    <img class="img-fluid w-100" src="kep.jpg" alt="Kép">\n  </div>\n  <div class="col-sm-4 col-md-2">\n    <img class="img-fluid w-100" src="kep.jpg" alt="Kép">\n  </div>\n  <!-- ... további 4 kép ... -->\n</div>`}
-      />
-      <ExampleBox label="Előnézet">
-        <div className="row text-center">
-          {['A', 'B', 'C', 'D', 'E', 'F'].map((x) => (
-            <div className="col-4 col-md-2 mb-2" key={x}>
-              <div className="bg-info text-white rounded d-flex align-items-center justify-content-center" style={{ height: 60 }}>
-                Kép {x}
-              </div>
-            </div>
-          ))}
-        </div>
-      </ExampleBox>
-
-      <h4>2 Oszlopos Kártya Elrendezés (Kapcsolat)</h4>
-      <CodeBlock
-        label="Használat: index.html — Kapcsolat szekció"
-        code={`<div class="row" id="kapcsolat">\n  <div class="col-sm-12">\n    <h3>Kapcsolat</h3>\n  </div>\n  <div class="col-sm-6">\n    <div class="card mb-3">\n      <div class="card-header bg-info text-white">Cím</div>\n      <div class="card-body">\n        <p>1146 Budapest, Thököly út 48-54.</p>\n      </div>\n    </div>\n  </div>\n  <div class="col-sm-6">\n    <div class="card mb-3">\n      <div class="card-header bg-info text-white">Email/Telefon</div>\n      <div class="card-body">\n        <p>info@petrik.hu</p>\n      </div>\n    </div>\n  </div>\n</div>`}
-      />
-      <ExampleBox label="Előnézet">
-        <div className="row">
-          <div className="col-sm-6 mb-2">
-            <div className="card">
-              <div className="card-header bg-info text-white">Cím</div>
-              <div className="card-body"><p className="mb-0">1146 Budapest, Thököly út 48-54.</p></div>
-            </div>
-          </div>
-          <div className="col-sm-6 mb-2">
-            <div className="card">
-              <div className="card-header bg-info text-white">Email/Telefon</div>
-              <div className="card-body"><p className="mb-0">info@pelda.hu | +36 70 123 4567</p></div>
-            </div>
-          </div>
+        <div className="row text-center small mt-2">
+          <div className="col-sm-4 col-md-3 mb-1"><div className="bg-warning rounded p-2">col-sm-4<br/>col-md-3</div></div>
+          <div className="col-sm-4 col-md-6 mb-1"><div className="bg-danger text-white rounded p-2">col-sm-4<br/>col-md-6</div></div>
+          <div className="col-sm-4 col-md-3 mb-1"><div className="bg-info text-white rounded p-2">col-sm-4<br/>col-md-3</div></div>
         </div>
       </ExampleBox>
     </DocSection>

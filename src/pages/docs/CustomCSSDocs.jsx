@@ -2,167 +2,99 @@ import { DocSection, CodeBlock, ExampleBox } from './DocComponents';
 
 export default function CustomCSSDocs() {
   return (
-    <DocSection id="custom-css" title="🎨 Egyedi CSS Minták és Haladó Stílusok">
-      <p>
-        Hasznos egyedi CSS szabályok, amelyek kiegészítik a Bootstrap keretrendszert.
-      </p>
+    <DocSection id="custom-css" title="🎨 Egyedi CSS (egyeni.css)">
+      <div className="alert alert-info">
+        <strong>Forrás:</strong> <code>cinko/001_jegyzet/css/egyeni.css</code> — a Bootstrap-et kiegészítő egyedi stílusok.
+      </div>
 
-      {/* Akcio */}
-      <h4 className="mt-4 pt-3 border-top">🏷️ Kiemelt Ár — <code>.akcio</code></h4>
+      {/* h1 */}
+      <h4>🎨 Fejléc szín — <code>h1</code></h4>
       <CodeBlock
-        label="Egyedi CSS"
-        code={`.akcio {\n  color: rgb(255, 100, 100);\n  font-weight: bold;\n  text-decoration: underline;\n}`}
+        label="egyeni.css"
+        code={`h1 {\n  color: rgb(77, 56, 194); /* Lila fejléc */\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
-        <p className="akcio">64 999 Ft-tól</p>
-        <p className="akcio">869 999 Ft-tól</p>
+        <h1 style={{ color: 'rgb(77, 56, 194)' }}>Lila fejléc (h1)</h1>
       </ExampleBox>
 
-      {/* Fejlec */}
-      <h4 className="mt-4 pt-3 border-top">🖼️ Fejléc Háttérképpel — <code>#fejlec</code></h4>
+      {/* cellaHatter */}
+      <h4>📦 Cella háttérszín — <code>.cellaHatter</code></h4>
       <CodeBlock
-        label="Egyedi CSS"
-        code={`#fejlec {\n  background-image: url('fejlec.jpg');\n  background-position: top right;\n  background-size: contain;\n  background-repeat: no-repeat;\n  height: 150px;\n}`}
-        lang="css"
-      />
-      <ExampleBox label="Előnézet">
-        <div className="rounded d-flex align-items-center p-3 mb-2" style={{
-          background: 'linear-gradient(135deg, #4c0e5e 0%, #7b1fa2 50%, #e0e0e0 100%)',
-          height: 120,
-        }}>
-          <span className="text-white fw-bold fs-4">Fejléc háttérképpel</span>
-        </div>
-      </ExampleBox>
-
-      {/* Gradiens */}
-      <h4 className="mt-4 pt-3 border-top">🌈 Gradiens Szöveg</h4>
-      <CodeBlock
-        label="Egyedi CSS"
-        code={`#gradient_piros_feher_zold {\n  background: linear-gradient(to right, red, white, green);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  /* Nemzeti színek: piros-fehér-zöld */\n}`}
-        lang="css"
-      />
-      <ExampleBox label="Előnézet">
-        <h3 style={{
-          background: 'linear-gradient(to right, #cd0000, white, #006600)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          fontWeight: 'bold',
-        }}>
-          Piros — Fehér — Zöld Gradiens Szöveg
-        </h3>
-      </ExampleBox>
-
-      {/* Body Gradient */}
-      <h4 className="mt-4 pt-3 border-top">📄 Oldalháttér Gradiens — <code>body</code></h4>
-      <CodeBlock
-        label="Egyedi CSS"
-        code={`body {\n  background: linear-gradient(to bottom,\n    white, green, red);\n}`}
-        lang="css"
-      />
-      <ExampleBox label="Előnézet">
-        <div className="rounded p-4 text-center text-white fw-bold" style={{
-          background: 'linear-gradient(to bottom, white, #4caf50, #cd0000)',
-          height: 100,
-        }}>
-          <span style={{ color: '#333' }}>Fehér →</span>{' '}
-          <span style={{ color: '#1b5e20' }}>Zöld →</span>{' '}
-          <span style={{ color: '#b71c1c' }}>Piros</span>
-        </div>
-      </ExampleBox>
-
-      {/* Cell Backgrounds */}
-      <h4 className="mt-4 pt-3 border-top">📦 Cella Háttérszínek — <code>.cellaHatter</code></h4>
-      <CodeBlock
-        label="Egyedi CSS"
+        label="egyeni.css"
         code={`.cellaHatter  { background-color: rgb(238, 233, 226); }\n.cellaHatter2 { background-color: rgb(238, 233, 226); }\n.cellaHatter3 { background-color: rgb(238, 233, 226); }`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
         <div className="row text-center">
-          {[1, 2, 3].map((i) => (
+          {[1, 2, 3].map(i => (
             <div className="col-4" key={i}>
-              <div className="p-3 rounded border" style={{ backgroundColor: 'rgb(238, 233, 226)' }}>
-                .cellaHatter{i} — Meleg bézs
+              <div className="p-3 border rounded" style={{ backgroundColor: 'rgb(238, 233, 226)' }}>
+                .cellaHatter{i} — meleg bézs
               </div>
             </div>
           ))}
         </div>
       </ExampleBox>
 
-      {/* First Letter */}
-      <h4 className="mt-4 pt-3 border-top">🔤 Első Betű Kiemelése — <code>::first-letter</code></h4>
+      {/* felkoverSzoveg */}
+      <h4>💪 Félkövér szöveg — <code>.felkoverSzoveg</code></h4>
       <CodeBlock
-        label="Egyedi CSS"
-        code={`.list-group-item::first-letter {\n  color: red; /* Piros első betű */\n}`}
+        label="egyeni.css"
+        code={`.felkoverSzoveg {\n  font-weight: bold;\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
-        <ul className="list-group">
-          <li className="list-group-item"><span style={{ color: 'red', fontWeight: 'bold', fontSize: '1.5em' }}>E</span>lső tétel — piros kezdőbetűvel</li>
-          <li className="list-group-item"><span style={{ color: 'red', fontWeight: 'bold', fontSize: '1.5em' }}>M</span>ásodik tétel — piros kezdőbetűvel</li>
-          <li className="list-group-item"><span style={{ color: 'red', fontWeight: 'bold', fontSize: '1.5em' }}>H</span>armadik tétel — piros kezdőbetűvel</li>
-        </ul>
+        <p className="fw-bold">Ez a szöveg .felkoverSzoveg osztállyal van formázva — félkövér.</p>
       </ExampleBox>
 
-      {/* Footer */}
-      <h4 className="mt-4 pt-3 border-top">🦶 Egyedi Lábléc — <code>footer</code></h4>
+      {/* egyszerVagyok */}
+      <h4>🔴 Egyedi kiemelés — <code>#egyszerVagyok</code></h4>
       <CodeBlock
-        label="Egyedi CSS"
-        code={`footer {\n  background-color: #4c0e5e; /* Lila/bordó */\n}\nfooter a {\n  color: white;\n  text-decoration: none;\n}`}
+        label="egyeni.css"
+        code={`#egyszerVagyok {\n  color: darkred;\n  font-size: 200%; /* Dupla méret */\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
-        <footer className="rounded p-3 text-white" style={{ backgroundColor: '#4c0e5e' }}>
-          <p className="mb-1">© 2026 — Minden jog fenntartva</p>
-          <a href="#s" className="text-white text-decoration-none">Kapcsolat</a>
-          {' | '}
-          <a href="#s" className="text-white text-decoration-none">Adatvédelem</a>
-        </footer>
+        <p style={{ color: 'darkred', fontSize: '200%' }}>#egyszerVagyok — sötétpiros, 200% méret</p>
       </ExampleBox>
 
-      {/* Scrollbar */}
-      <h4 className="mt-4 pt-3 border-top">📜 Mindig Látható Scrollbar</h4>
+      {/* body background */}
+      <h4>🖼️ Háttérkép — <code>body</code></h4>
       <CodeBlock
-        label="Egyedi CSS"
+        label="egyeni.css"
+        code={`body {\n  background-image: url(./../images/images.jfif);\n  background-repeat: repeat;\n  background-size: 50px;\n  background-attachment: fixed;\n}`}
+        lang="css"
+      />
+      <ExampleBox label="Előnézet">
+        <div className="rounded p-4 text-center" style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 10px, transparent 10px, transparent 20px)',
+          border: '2px dashed #6c757d',
+        }}>
+          <strong>Háttérkép</strong><br />
+          <small>repeat · 50px · fixed</small>
+        </div>
+      </ExampleBox>
+
+      {/* scrollbar */}
+      <h4>📜 Mindig látszó scrollbar — <code>html</code></h4>
+      <CodeBlock
+        label="egyeni.css"
         code={`html {\n  overflow-y: scroll; /* Mindig látszik a görgetősáv */\n}`}
         lang="css"
       />
       <p className="text-muted">
-        Ez a szabály megakadályozza, hogy az oldal "ugráljon" amikor a scrollbar megjelenik/eltűnik 
-        a rövid és hosszú oldalak között váltáskor. <strong>Gyakori minta.</strong>
+        Megakadályozza, hogy az oldal tartalma "ugráljon" amikor a scrollbar megjelenik/eltűnik
+        a rövid és hosszú oldalak között váltáskor.
       </p>
 
-      {/* Text Indent */}
-      <h4 className="mt-4 pt-3 border-top">📝 Bekezdés Behúzás — <code>text-indent</code></h4>
+      {/* Full CSS */}
+      <h4>Teljes egyeni.css</h4>
       <CodeBlock
-        label="Egyedi CSS"
-        code={`p {\n  text-align: justify;\n  text-indent: 20px;\n}`}
+        label="egyeni.css — teljes fájl"
+        code={`h1 {\n  color: rgb(77, 56, 194);\n}\n\n.cellaHatter  { background-color: rgb(238, 233, 226); }\n.cellaHatter2 { background-color: rgb(238, 233, 226); }\n.cellaHatter3 { background-color: rgb(238, 233, 226); }\n\n.felkoverSzoveg {\n  font-weight: bold;\n}\n\n#egyszerVagyok {\n  color: darkred;\n  font-size: 200%;\n}\n\nhtml {\n  overflow-y: scroll;\n}\n\nbody {\n  background-image: url(./../images/images.jfif);\n  background-repeat: repeat;\n  background-size: 50px;\n  background-attachment: fixed;\n}`}
         lang="css"
       />
-      <ExampleBox label="Előnézet">
-        <p style={{ textAlign: 'justify', textIndent: '20px' }}>
-          Ez a bekezdés 20px-es behúzással kezdődik. A Lorem ipsum dolor sit amet, consectetur 
-          adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ez a stílus a hagyományos nyomtatott szövegek megjelenését idézi.
-        </p>
-      </ExampleBox>
-
-      {/* Overlay text */}
-      <h4 className="mt-4 pt-3 border-top">🌑 Árnyékolt Szöveg</h4>
-      <CodeBlock
-        label="Egyedi CSS"
-        code={`.shadow {\n  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);\n}`}
-        lang="css"
-      />
-      <ExampleBox label="Előnézet">
-        <h3 className="mb-3" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
-          Árnyékolt Szöveg
-        </h3>
-        <p style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.2)' }}>
-          Ez a szöveg finom árnyékkal jelenik meg, ami mélységet ad a tipográfiának.
-        </p>
-      </ExampleBox>
     </DocSection>
   );
 }

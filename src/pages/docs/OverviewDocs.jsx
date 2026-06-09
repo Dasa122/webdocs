@@ -1,77 +1,32 @@
-import { DocSection } from './DocComponents';
+import { DocSection, CodeBlock } from './DocComponents';
 
 export default function OverviewDocs() {
   return (
-    <DocSection id="overview" title="📋 Áttekintés">
+    <DocSection id="overview" title="📋 HTML5 Alapszerkezet">
       <div className="alert alert-info">
-        <strong>📚 Bootstrap 5 + CSS Gyorsreferencia</strong><br />
-        Ez az oldal a Bootstrap 5 keretrendszer komponenseit, segédosztályait
-        és gyakori CSS mintákat mutatja be — kódpéldákkal és élő előnézetekkel.
-        Minden példa azonnal másolható és kipróbálható.
+        <strong>Forrás:</strong> <code>index.html</code> — Bootstrap 5 + egyedi CSS oldal.
       </div>
 
-      <h4>Miről szól ez a dokumentáció?</h4>
-      <p>
-        A Bootstrap 5 az egyik legnépszerűbb CSS keretrendszer. Ez a dokumentáció
-        segít gyorsan megtalálni a szükséges osztályokat és komponenseket anélkül,
-        hogy a teljes hivatalos dokumentációt át kellene böngészni.
-      </p>
+      <h4>HTML5 Dokumentum Váz</h4>
+      <CodeBlock
+        label="index.html — teljes váz"
+        code={`<!DOCTYPE html>\n<html lang="hu">\n\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Teszt</title>\n    <link rel="stylesheet" href="./css/bootstrap.min.css">\n    <link rel="stylesheet" href="./css/egyeni.css">\n</head>\n\n<body>\n    <div class="container">\n        <!-- Minden tartalom -->\n    </div>\n    <script src="./js/bootstrap.bundle.min.js"></script>\n</body>\n\n</html>`}
+      />
 
-      <h4>Technológiák</h4>
+      <h4>Kötelező elemek</h4>
       <div className="table-responsive">
         <table className="table table-bordered table-sm">
-          <thead className="table-light">
-            <tr><th>Technológia</th><th>Verzió</th><th>Szerep</th></tr>
-          </thead>
+          <thead className="table-light"><tr><th>Elem</th><th>Szerep</th></tr></thead>
           <tbody>
-            <tr><td><strong>Bootstrap</strong></td><td>5.3</td><td>CSS keretrendszer — grid, komponensek, segédosztályok</td></tr>
-            <tr><td><strong>React</strong></td><td>18</td><td>UI réteg — ebben fut a dokumentációs oldal</td></tr>
-            <tr><td><strong>Vite</strong></td><td>5</td><td>Build eszköz — gyors fejlesztés és production build</td></tr>
-            <tr><td><strong>Bun</strong></td><td>1.3</td><td>JavaScript runtime + package manager</td></tr>
-            <tr><td><strong>Docker</strong></td><td>—</td><td>Konténerizálás (Coolify deploy-hoz)</td></tr>
+            <tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>HTML5 deklaráció</td></tr>
+            <tr><td><code>lang="hu"</code></td><td>Oldal nyelve (magyar)</td></tr>
+            <tr><td><code>meta charset="UTF-8"</code></td><td>Karakterkódolás (ékezetek)</td></tr>
+            <tr><td><code>meta name="viewport"</code></td><td>Reszponzivitás mobilon</td></tr>
+            <tr><td><code>title</code></td><td>Böngésző fül címe</td></tr>
+            <tr><td><code>link rel="stylesheet"</code></td><td>CSS betöltés — bootstrap, majd egyedi</td></tr>
+            <tr><td><code>script src</code></td><td>JS betöltés — &lt;/body&gt; előtt</td></tr>
           </tbody>
         </table>
-      </div>
-
-      <h4>HTML Alap Szerkezet Bootstrap-pel</h4>
-      <pre className="bg-dark text-light p-3 rounded">
-{`<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oldal címe</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/sajat.css">
-    <script src="js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-    <div class="container bg-light">
-        <!-- Tartalom -->
-    </div>
-</body>
-</html>`}
-      </pre>
-
-      <h4>Dokumentált Kategóriák</h4>
-      <div className="row mt-3">
-        {[
-          { icon: '🥾', title: 'Bootstrap 5 Referencia', desc: 'Layout, tipográfia, táblázatok, képek, űrlapok, összes komponens A-Z, segédosztályok' },
-          { icon: '📐', title: 'Grid Rendszer', desc: '12-oszlopos reszponzív rács, töréspontok: sm, md, lg, xl, xxl' },
-          { icon: '🔤', title: 'Tipográfia', desc: 'Fejlécek, display, szövegszínek, igazítás, stílusok' },
-          { icon: '🧩', title: 'Komponensek', desc: 'Navbar, Cards, Tables, Alerts, Badges, Buttons, List Groups, Hero' },
-          { icon: '🛠️', title: 'Segédosztályok', desc: 'Spacing, display, float, háttérszínek, képek, árnyékok, keretek' },
-          { icon: '🎨', title: 'Egyedi CSS', desc: 'Gradiensek, árnyékok, ::first-letter, scrollbar, text-indent' },
-        ].map((cat) => (
-          <div className="col-sm-6 col-md-4 mb-3" key={cat.title}>
-            <div className="card h-100 border-info">
-              <div className="card-body">
-                <h5 className="card-title">{cat.icon} {cat.title}</h5>
-                <p className="card-text small text-muted">{cat.desc}</p>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </DocSection>
   );

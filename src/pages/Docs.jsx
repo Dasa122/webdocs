@@ -1,121 +1,103 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import OverviewDocs from './docs/OverviewDocs';
-import BootstrapDocs from './docs/BootstrapDocs';
 import GridDocs from './docs/GridDocs';
-import TypographyDocs from './docs/TypographyDocs';
-import ComponentsDocs from './docs/ComponentsDocs';
-import UtilitiesDocs from './docs/UtilitiesDocs';
+import NavDocs from './docs/NavDocs';
+import ListDocs from './docs/ListDocs';
+import TableDocs from './docs/TableDocs';
+import ImageDocs from './docs/ImageDocs';
+import JumboDocs from './docs/JumboDocs';
+import FloatDocs from './docs/FloatDocs';
 import CustomCSSDocs from './docs/CustomCSSDocs';
 
 /* ============================================================
-   SIDEBAR TREE — minden szekció + alpontok
+   ONLY patterns from: cinko/001_jegyzet/index.html + egyeni.css
    ============================================================ */
 const sidebarTree = [
   {
     id: 'overview', icon: '📋', label: 'Áttekintés',
-    searchText: 'áttekintés bootstrap verzió technológia html szerkezet kategóriák',
+    searchText: 'html doctype meta charset viewport title link css js bootstrap',
     children: [
-      { id: 'overview', label: 'Technológiai stack', anchor: 'overview' },
-      { id: 'overview', label: 'HTML alap szerkezet', anchor: 'overview' },
-      { id: 'overview', label: 'Dokumentált kategóriák', anchor: 'overview' },
+      { id: 'overview', label: 'HTML5 alapszerkezet', anchor: 'overview' },
+      { id: 'overview', label: 'meta, link, script betöltés', anchor: 'overview' },
     ],
   },
   {
-    id: 'bootstrap', icon: '🥾', label: 'Bootstrap 5 Referencia',
-    searchText: 'bootstrap referencia layout grid konténer tipográfia táblázat kép űrlap accordion breadcrumb carousel collapse dropdown modal nav tab pagination progress spinner toast tooltip popover offcanvas',
+    id: 'grid', icon: '📐', label: 'Grid & Konténer',
+    searchText: 'container row col-sm col-md col-lg cella',
     children: [
-      { id: 'bootstrap', label: 'Layout — Konténerek', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Grid — Töréspontok', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Tipográfia — Fejlécek', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Display fejlécek', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Szövegstílusok és színek', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Táblázatok — table, striped, hover', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Képek — img-fluid, thumbnail', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Űrlapok — form-control, label', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Accordion (lenyíló panel)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Breadcrumb (morzsa)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Button Group (gombcsoport)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Carousel (diavetítés)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Close Button (bezáró gomb)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Collapse (összecsukás)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Dropdown (lenyíló menü)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Modal (felugró ablak)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Navs & Tabs (fülek)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Offcanvas (oldalsó panel)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Pagination (lapozó)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Progress (folyamatjelző)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Scrollspy (görgetés követő)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Spinners (betöltő animáció)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Toasts (értesítések)', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Tooltips & Popovers', anchor: 'bootstrap' },
-      { id: 'bootstrap', label: 'Segédosztályok — Borders, Flex, Shadow', anchor: 'bootstrap' },
+      { id: 'grid', label: '.container — középre zárt tartalom', anchor: 'grid' },
+      { id: 'grid', label: '.row + .col-sm-12 — teljes sor', anchor: 'grid' },
+      { id: 'grid', label: 'col-sm-8 col-md-6 col-lg-2 — reszponzív', anchor: 'grid' },
+      { id: 'grid', label: 'col-sm-4 col-md-3 — képgaléria', anchor: 'grid' },
     ],
   },
   {
-    id: 'grid', icon: '📐', label: 'Grid Rendszer',
-    searchText: 'grid rács oszlop töréspont col sm md lg xl xxl row konténer container',
+    id: 'nav', icon: '🔗', label: 'Navigáció (Navbar)',
+    searchText: 'navbar navbar-expand-sm bg-light navbar-nav nav-item nav-link',
     children: [
-      { id: 'grid', label: 'Töréspontok — sm, md, lg, xl, xxl', anchor: 'grid' },
-      { id: 'grid', label: '4 oszlopos rács (col-sm-6 col-md-3)', anchor: 'grid' },
-      { id: 'grid', label: '3 oszlopos képgaléria (col-4 col-md-2)', anchor: 'grid' },
-      { id: 'grid', label: '2 oszlopos kártya (col-sm-6)', anchor: 'grid' },
+      { id: 'nav', label: 'navbar + navbar-expand-sm', anchor: 'nav' },
+      { id: 'nav', label: 'navbar-nav, nav-item, nav-link', anchor: 'nav' },
+      { id: 'nav', label: 'Horgony linkek (#menupont)', anchor: 'nav' },
     ],
   },
   {
-    id: 'typography', icon: '🔤', label: 'Tipográfia',
-    searchText: 'fejléc display szöveg szín igazítás lead muted mark del ins strong em h1 h2 h3 h4 h5 h6 piros oblique',
+    id: 'jumbo', icon: '🎯', label: 'Fejléc (Jumbotron)',
+    searchText: 'mt-4 p-5 bg-warning text-white rounded h1',
     children: [
-      { id: 'typography', label: 'Fejlécek h1–h6 (egyedi színek)', anchor: 'typography' },
-      { id: 'typography', label: 'Szövegszínek — text-*', anchor: 'typography' },
-      { id: 'typography', label: 'Oldalcím — #oldalcim', anchor: 'typography' },
-      { id: 'typography', label: 'Szöveg igazítás — text-align', anchor: 'typography' },
-      { id: 'typography', label: 'Piros kiemelés — .piros', anchor: 'typography' },
-      { id: 'typography', label: 'Dőlt stílus — oblique', anchor: 'typography' },
+      { id: 'jumbo', label: 'mt-4 + p-5 + bg-warning + text-white + rounded', anchor: 'jumbo' },
+      { id: 'jumbo', label: 'h1 címsor + p alcím', anchor: 'jumbo' },
     ],
   },
   {
-    id: 'components', icon: '🧩', label: 'Komponensek',
-    searchText: 'navbar card table alert badge button list-group hero kártya táblázat gomb jelvény lista navigáció',
+    id: 'lists', icon: '📋', label: 'Listák',
+    searchText: 'list-group list-group-item list-group-numbered ul ol li',
     children: [
-      { id: 'components', label: 'Navbar (navigációs sáv)', anchor: 'components' },
-      { id: 'components', label: 'Cards — fejléces, képes kártya', anchor: 'components' },
-      { id: 'components', label: 'Tables — table, hover, bordered', anchor: 'components' },
-      { id: 'components', label: 'Alerts — info, danger', anchor: 'components' },
-      { id: 'components', label: 'Badges — jelvények, státusz', anchor: 'components' },
-      { id: 'components', label: 'Buttons — gombok, outline, disabled', anchor: 'components' },
-      { id: 'components', label: 'List Groups — lista csoportok', anchor: 'components' },
-      { id: 'components', label: 'Hero fejléc — p-5 bg-info', anchor: 'components' },
+      { id: 'lists', label: 'Rendezetlen lista — ul.list-group', anchor: 'lists' },
+      { id: 'lists', label: 'Rendezett lista — ol.list-group-numbered', anchor: 'lists' },
+      { id: 'lists', label: 'Félkövér listaelem — b tag', anchor: 'lists' },
     ],
   },
   {
-    id: 'utilities', icon: '🛠️', label: 'Segédosztályok',
-    searchText: 'spacing margin padding display flex float width height background border shadow image img',
+    id: 'table', icon: '📊', label: 'Táblázat',
+    searchText: 'table table-bordered table-hover th tr td',
     children: [
-      { id: 'utilities', label: 'Spacing — p-*, m-*, mb-*, mt-*', anchor: 'utilities' },
-      { id: 'utilities', label: 'Display & Position — d-flex, float', anchor: 'utilities' },
-      { id: 'utilities', label: 'Background — bg-light, bg-info, ...', anchor: 'utilities' },
-      { id: 'utilities', label: 'Images — img-fluid, rounded, w-100', anchor: 'utilities' },
+      { id: 'table', label: 'table + table-bordered + table-hover', anchor: 'table' },
+      { id: 'table', label: 'th fejléc sor + td adat sorok', anchor: 'table' },
+    ],
+  },
+  {
+    id: 'images', icon: '🖼️', label: 'Képek',
+    searchText: 'img-fluid w-100 img src alt title',
+    children: [
+      { id: 'images', label: 'img-fluid — reszponzív kép', anchor: 'images' },
+      { id: 'images', label: 'w-100 — teljes szélesség', anchor: 'images' },
+      { id: 'images', label: 'alt + title attribútumok', anchor: 'images' },
+    ],
+  },
+  {
+    id: 'float', icon: '↔️', label: 'Lebegtetés & Lábléc',
+    searchText: 'float-start float-end clearfix',
+    children: [
+      { id: 'float', label: 'float-start / float-end', anchor: 'float' },
+      { id: 'float', label: 'clearfix — úsztatás törlése', anchor: 'float' },
+      { id: 'float', label: 'b + i — félkövér, dőlt', anchor: 'float' },
     ],
   },
   {
     id: 'custom-css', icon: '🎨', label: 'Egyedi CSS',
-    searchText: 'gradiens árnyék first-letter scrollbar text-indent háttérkép akcio oldalcim fejlec footer shadow',
+    searchText: 'cellaHatter felkoverSzoveg egyszerVagyok h1 background-image scroll',
     children: [
-      { id: 'custom-css', label: 'Akciós ár — .akcio', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Fejléc háttérképpel — #fejlec', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Gradiens szöveg', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Oldalháttér gradiens', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Cella háttérszínek — .cellaHatter', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Első betű kiemelése — ::first-letter', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Egyedi lábléc — footer', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Scrollbar — overflow-y', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Bekezdés behúzás — text-indent', anchor: 'custom-css' },
-      { id: 'custom-css', label: 'Árnyékolt szöveg — text-shadow', anchor: 'custom-css' },
+      { id: 'custom-css', label: 'h1 — lila fejlécszín', anchor: 'custom-css' },
+      { id: 'custom-css', label: '.cellaHatter — bézs háttér', anchor: 'custom-css' },
+      { id: 'custom-css', label: '.felkoverSzoveg — félkövér', anchor: 'custom-css' },
+      { id: 'custom-css', label: '#egyszerVagyok — sötétpiros nagy', anchor: 'custom-css' },
+      { id: 'custom-css', label: 'body — háttérkép (repeat, fixed)', anchor: 'custom-css' },
+      { id: 'custom-css', label: 'html — overflow-y: scroll', anchor: 'custom-css' },
     ],
   },
 ];
 
-/* ---- Scroll-spy hook ---- */
+/* ---- Scroll-spy ---- */
 function useScrollSpy(ids, offset = 80) {
   const [active, setActive] = useState(ids[0]);
   useEffect(() => {
@@ -135,30 +117,19 @@ function useScrollSpy(ids, offset = 80) {
   return active;
 }
 
-/* ---- Sub-component: Tree Node ---- */
+/* ---- Tree Node ---- */
 function TreeNode({ node, activeId, search, expanded, onToggle, onSelect, depth }) {
-  const hasChildren = node.children && node.children.length > 0;
+  const hasChildren = node.children?.length > 0;
   const isExpanded = expanded[node.id] ?? false;
+  const effectiveExpanded = search ? true : isExpanded;
   const isActive = activeId === node.id;
 
-  // Auto-expand when searching
-  const effectiveExpanded = search ? true : isExpanded;
-
-  const childMatch = (child) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return child.label.toLowerCase().includes(q);
-  };
-
-  const visibleChildren = hasChildren && search
-    ? node.children.filter(childMatch)
-    : node.children || [];
-
-  const anyChildVisible = visibleChildren.length > 0;
+  const visibleChildren = search
+    ? (node.children || []).filter(c => c.label.toLowerCase().includes(search.toLowerCase()))
+    : (node.children || []);
 
   return (
     <div className="tree-node" style={{ paddingLeft: depth * 8 }}>
-      {/* Parent row */}
       <div
         className={`tree-row ${isActive ? 'active' : ''}`}
         onClick={() => {
@@ -166,27 +137,17 @@ function TreeNode({ node, activeId, search, expanded, onToggle, onSelect, depth 
           onSelect(node.id);
         }}
       >
-        {hasChildren && !search && (
-          <span className={`tree-arrow ${isExpanded ? 'open' : ''}`}>▸</span>
-        )}
+        {hasChildren && !search && <span className={`tree-arrow ${isExpanded ? 'open' : ''}`}>▸</span>}
         {hasChildren && search && <span className="tree-arrow-spacer" />}
         {!hasChildren && <span className="tree-arrow-spacer" />}
         <span className="tree-icon">{node.icon}</span>
         <span className="tree-label">{node.label}</span>
-        {hasChildren && (
-          <span className="tree-count">{node.children.length}</span>
-        )}
+        {hasChildren && <span className="tree-count">{node.children.length}</span>}
       </div>
-
-      {/* Children */}
-      {hasChildren && effectiveExpanded && anyChildVisible && (
+      {hasChildren && effectiveExpanded && visibleChildren.length > 0 && (
         <div className="tree-children">
           {visibleChildren.map((child, i) => (
-            <div
-              key={`${child.label}-${i}`}
-              className="tree-child"
-              onClick={() => onSelect(child.anchor || child.id)}
-            >
+            <div key={`${child.label}-${i}`} className="tree-child" onClick={() => onSelect(child.anchor)}>
               <span className="tree-child-bullet">•</span>
               <span className="tree-child-label">{child.label}</span>
             </div>
@@ -197,9 +158,7 @@ function TreeNode({ node, activeId, search, expanded, onToggle, onSelect, depth 
   );
 }
 
-/* ============================================================
-   MAIN COMPONENT
-   ============================================================ */
+/* ============================================================ */
 export default function Docs() {
   const [search, setSearch] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -209,60 +168,52 @@ export default function Docs() {
     return init;
   });
   const contentRef = useRef(null);
-
   const parentIds = useMemo(() => sidebarTree.map(n => n.id), []);
   const activeId = useScrollSpy(parentIds);
 
-  // ---- Search logic ----
-  const searchInTree = useCallback((q) => {
-    if (!q) return sidebarTree;
-    const lower = q.toLowerCase();
-    return sidebarTree.filter(node => {
-      const labelMatch = node.label.toLowerCase().includes(lower);
-      const textMatch = node.searchText.toLowerCase().includes(lower);
-      const childMatch = node.children?.some(c => c.label.toLowerCase().includes(lower));
-      return labelMatch || textMatch || childMatch;
-    });
-  }, []);
+  // Filter tree
+  const filteredTree = useMemo(() => {
+    if (!search) return sidebarTree;
+    const q = search.toLowerCase();
+    return sidebarTree.filter(n =>
+      n.label.toLowerCase().includes(q) ||
+      n.searchText.toLowerCase().includes(q) ||
+      (n.children || []).some(c => c.label.toLowerCase().includes(q))
+    );
+  }, [search]);
 
-  const filteredTree = useMemo(() => searchInTree(search), [search, searchInTree]);
-
-  // Full-content search: scan rendered DOM
+  // Full-content search in DOM
   useEffect(() => {
     if (!contentRef.current || !search) return;
     const sections = contentRef.current.querySelectorAll('section[id]');
     sections.forEach(sec => {
-      const text = sec.textContent || '';
-      const match = text.toLowerCase().includes(search.toLowerCase());
-      sec.style.display = match ? '' : 'none';
+      sec.style.display = sec.textContent.toLowerCase().includes(search.toLowerCase()) ? '' : 'none';
     });
-    // Cleanup on unmount or search clear
-    return () => {
-      sections.forEach(sec => { sec.style.display = ''; });
-    };
+    return () => { sections.forEach(sec => { sec.style.display = ''; }); };
   }, [search, filteredTree]);
 
   const scrollTo = useCallback((id) => {
     setSidebarOpen(false);
     const el = document.getElementById(id);
-    if (el) {
-      el.style.display = ''; // unhide if hidden by search
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (el) { el.style.display = ''; el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   }, []);
 
   const toggleExpand = useCallback((id) => {
     setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  // ---- Content sections ----
+  const expandAll = () => { const a = {}; sidebarTree.forEach(n => { a[n.id] = true; }); setExpanded(a); };
+  const collapseAll = () => { const a = {}; sidebarTree.forEach(n => { a[n.id] = false; }); setExpanded(a); };
+
   const contentEls = useMemo(() => [
     <OverviewDocs key="overview" />,
-    <BootstrapDocs key="bootstrap" />,
     <GridDocs key="grid" />,
-    <TypographyDocs key="typography" />,
-    <ComponentsDocs key="components" />,
-    <UtilitiesDocs key="utilities" />,
+    <NavDocs key="nav" />,
+    <JumboDocs key="jumbo" />,
+    <ListDocs key="lists" />,
+    <TableDocs key="table" />,
+    <ImageDocs key="images" />,
+    <FloatDocs key="float" />,
     <CustomCSSDocs key="custom-css" />,
   ], []);
 
@@ -272,122 +223,55 @@ export default function Docs() {
     return m;
   }, [contentEls]);
 
-  // ---- Expand all / collapse all ----
-  const expandAll = () => {
-    const all = {};
-    sidebarTree.forEach(n => { all[n.id] = true; });
-    setExpanded(all);
-  };
-  const collapseAll = () => {
-    const all = {};
-    sidebarTree.forEach(n => { all[n.id] = false; });
-    setExpanded(all);
-  };
-
   return (
     <div className="docs-layout">
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
 
-      {/* ---- Sidebar ---- */}
       <aside className={`docs-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
           <span className="brand-icon">📚</span>
-          <div>
-            <strong>Bootstrap 5</strong>
-            <small>+ CSS Docs</small>
-          </div>
+          <div><strong>Bootstrap 5</strong><small>+ CSS Docs</small></div>
         </div>
-
-        {/* Search */}
         <div className="sidebar-search">
           <span className="search-icon">🔍</span>
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Keresés (pl. grid, navbar, modal)..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+          <input type="text" className="search-input" placeholder="Keresés..." value={search} onChange={e => setSearch(e.target.value)} />
           {search && <button className="search-clear" onClick={() => setSearch('')}>✕</button>}
         </div>
-
-        {/* Expand/collapse controls */}
         {!search && (
           <div className="sidebar-controls">
-            <button onClick={expandAll} title="Összes kinyitása">＋ Összes</button>
-            <button onClick={collapseAll} title="Összes becsukása">－ Becsuk</button>
+            <button onClick={expandAll}>＋ Összes</button>
+            <button onClick={collapseAll}>－ Becsuk</button>
           </div>
         )}
-
-        {/* Tree nav */}
         <nav className="sidebar-nav">
           {filteredTree.map(node => (
-            <TreeNode
-              key={node.id}
-              node={node}
-              activeId={activeId}
-              search={search}
-              expanded={expanded}
-              onToggle={toggleExpand}
-              onSelect={scrollTo}
-              depth={0}
-            />
+            <TreeNode key={node.id} node={node} activeId={activeId} search={search} expanded={expanded} onToggle={toggleExpand} onSelect={scrollTo} depth={0} />
           ))}
-          {filteredTree.length === 0 && (
-            <div className="no-results">
-              <p>🔍 Nincs találat</p>
-              <small>Próbálj más kulcsszavakat</small>
-            </div>
-          )}
+          {filteredTree.length === 0 && <div className="no-results"><p>🔍 Nincs találat</p></div>}
         </nav>
-
-        {/* Search stats */}
-        {search && (
-          <div className="sidebar-search-info">
-            <small>{filteredTree.length} szekció találat</small>
-          </div>
-        )}
-
-        <div className="sidebar-footer">
-          <small>Bun · React · Vite · Bootstrap 5.3</small>
-        </div>
+        {search && <div className="sidebar-search-info"><small>{filteredTree.length} szekció</small></div>}
+        <div className="sidebar-footer"><small>Bun · React · Vite · Bootstrap 5.3</small></div>
       </aside>
 
-      {/* ---- Mobile ---- */}
       <header className="docs-mobile-header">
-        <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
-          {sidebarOpen ? '✕' : '☰'}
-        </button>
+        <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>{sidebarOpen ? '✕' : '☰'}</button>
         <span className="mobile-brand">📚 Bootstrap 5 + CSS Docs</span>
       </header>
 
-      {/* ---- Main ---- */}
       <main className="docs-main">
         <div className="docs-hero">
           <h1>Bootstrap 5 + CSS Dokumentáció</h1>
-          <p>
-            Gyorsreferencia kódpéldákkal és interaktív előnézetekkel.
-            Keress rá bármelyik komponensre, osztályra vagy CSS tulajdonságra.
-          </p>
+          <p>Az index.html és egyeni.css fájlban használt összes minta — kódpéldákkal, élő előnézetekkel.</p>
           <div className="hero-badges">
             <span className="badge bg-primary">Bootstrap 5.3</span>
-            <span className="badge bg-secondary">React 18</span>
-            <span className="badge bg-success">Vite 5</span>
-            <span className="badge bg-info">Bun</span>
+            <span className="badge bg-secondary">HTML5</span>
+            <span className="badge bg-success">CSS3</span>
           </div>
         </div>
-
         <div className="docs-content" ref={contentRef}>
-          {sidebarTree.map(s => (
-            <div key={s.id}>
-              {sectionMap[s.id]}
-            </div>
-          ))}
+          {sidebarTree.map(s => <div key={s.id}>{sectionMap[s.id]}</div>)}
         </div>
-
-        <footer className="docs-footer">
-          <p>Bootstrap 5 + CSS Docs — Bun + React + Vite</p>
-        </footer>
+        <footer className="docs-footer"><p>Bootstrap 5 + CSS Docs — Bun + React + Vite</p></footer>
       </main>
     </div>
   );

@@ -1,38 +1,38 @@
-/* === Alap stílusok (sajat.css-ből átvéve) === */
+/* === Base styles === */
 
-/* 5.1 – scrollbar mindig látszik, ne ugráljon az oldal */
+/* Always show scrollbar to prevent layout shift */
 html {
   overflow-y: scroll;
 }
 
-/* 5.2 – háttérszín */
+/* Page background */
 body {
   background-color: #afafaf;
 }
 
-/* 5.3 – akciós ár kiemelése */
+/* Accent/highlight price text */
 .akcio {
   color: rgb(255, 100, 100);
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* 5.4 – oldalcím */
+/* Large page title */
 #oldalcim {
   font-size: 300%;
   text-transform: uppercase;
   font-style: italic;
 }
 
-/* === Kiegészítő stílusok === */
+/* === Layout === */
 
-/* Az oldal konténer fehér háttérrel */
+/* White content container */
 .app-container {
   background-color: #f8f9fa;
   min-height: 100vh;
 }
 
-/* Hero szekció */
+/* Hero section */
 .hero-section {
   background-color: #0dcaf0;
   color: white;
@@ -43,17 +43,14 @@ body {
   color: rgb(224, 230, 235);
 }
 
-/* Termékkártya hover effekt */
-.product-card {
-  transition: transform 0.2s ease;
-  cursor: pointer;
-}
-.product-card:hover {
-  transform: scale(1.03);
-}
-
 /* Footer badge-ek */
 .footer-badges .badge {
   font-size: 0.85rem;
   padding: 0.5em 0.85em;
+}
+
+/* Doksi oldal sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
 }

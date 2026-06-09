@@ -4,8 +4,7 @@ export default function ComponentsDocs() {
   return (
     <DocSection id="components" title="🧩 Bootstrap Komponensek">
       <p>
-        A projektekben használt összes Bootstrap 5 komponens, valós kódmintákkal
-        és előnézetekkel.
+        Bootstrap 5 komponensek kódmintákkal és élő előnézetekkel.
       </p>
 
       {/* ---- NAVBAR ---- */}
@@ -15,13 +14,13 @@ export default function ComponentsDocs() {
         A <code>navbar-expand-lg</code> és <code>navbar-expand-sm</code> változatok is használatban vannak.
       </p>
       <CodeBlock
-        label="Használat: index.html — minden projekt"
+        label="Navbar — teljes példa"
         code={`<nav class="navbar navbar-expand-lg bg-body-tertiary">\n  <div class="container-fluid">\n    <button class="navbar-toggler" type="button"\n            data-bs-toggle="collapse" data-bs-target="#navbarNav"\n            aria-controls="navbarNav" aria-expanded="false"\n            aria-label="Toggle navigation">\n      <span class="navbar-toggler-icon"></span>\n    </button>\n    <div class="collapse navbar-collapse" id="navbarNav">\n      <ul class="navbar-nav">\n        <li class="nav-item">\n          <a class="nav-link active" href="#">Kezdőlap</a>\n        </li>\n        <li class="nav-item">\n          <a class="nav-link" href="#">Napi ajánlataink</a>\n        </li>\n        <li class="nav-item">\n          <a class="nav-link" href="#">Összehasonlítás</a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>`}
       />
       <ExampleBox label="Előnézet">
         <nav className="navbar navbar-expand-lg bg-body-tertiary rounded border">
           <div className="container-fluid">
-            <span className="navbar-brand">🔍 Projekt</span>
+            <span className="navbar-brand">🔍 Márkanév</span>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#docNav">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -71,12 +70,12 @@ export default function ComponentsDocs() {
 
       <h5>Képes Kártya (Teljes)</h5>
       <CodeBlock
-        label="Használat: turizmus projekt"
+        label="Kártya képpel, szöveggel, gombbal"
         code={`<div class="card h-100">\n  <img src="kep.jpg" class="card-img-top" alt="Leírás">\n  <div class="card-body">\n    <h5 class="card-title">Cím</h5>\n    <p class="card-text">Rövid leírás a kártya tartalmáról.</p>\n  </div>\n  <div class="card-footer">\n    <a href="#" class="btn btn-primary w-100">Részletek</a>\n  </div>\n</div>`}
       />
       <ExampleBox label="Előnézet">
         <div className="row">
-          {['Hungarikum 1', 'Hungarikum 2', 'Hungarikum 3'].map((title, i) => (
+          {['Kártya 1', 'Kártya 2', 'Kártya 3'].map((title, i) => (
             <div className="col-sm-4 mb-3" key={i}>
               <div className="card h-100">
                 <div className="bg-secondary text-white d-flex align-items-center justify-content-center" style={{ height: 100 }}>
@@ -98,7 +97,7 @@ export default function ComponentsDocs() {
       {/* ---- TABLES ---- */}
       <h4 className="mt-4 pt-3 border-top">📊 Táblázatok (Tables)</h4>
       <p>
-        A projektek három Bootstrap táblázat-változatot használnak:
+        Bootstrap táblázat-változatok:
       </p>
       <ul>
         <li><code>table</code> — alap stílus</li>
@@ -139,7 +138,7 @@ export default function ComponentsDocs() {
 
       {/* ---- BADGES ---- */}
       <h4 className="mt-4 pt-3 border-top">🏷️ Jelvények (Badges)</h4>
-      <p>Két mintában használt: láblécben és Hungarikum jelölőként.</p>
+      <p>Badge-ek láblécben és státuszjelölőként.</p>
       <CodeBlock
         label="Használat 1: index.html — Lábléc"
         code={`<span class="badge bg-info float-start">Szerző Neve</span>\n<span class="badge bg-info float-start">10.E</span>\n<span class="badge bg-info float-end">2026.05.20.</span>`}
@@ -153,11 +152,11 @@ export default function ComponentsDocs() {
       </ExampleBox>
 
       <CodeBlock
-        label="Használat 2: turizmus projekt"
-        code={`<span class="badge bg-success">Hungarikum</span>`}
+        label="Badge — státuszjelölő"
+        code={`<span class="badge bg-success">Aktív</span>`}
       />
-      <ExampleBox label="Előnézet — Hungarikum jelölő">
-        <span className="badge bg-success me-1">✓ Hungarikum</span>
+      <ExampleBox label="Előnézet — Státuszjelölők">
+        <span className="badge bg-success me-1">✓ Aktív</span>
         <span className="badge bg-warning text-dark me-1">◇ Kiemelt</span>
         <span className="badge bg-danger me-1">⭕ Fontos</span>
         <span className="badge bg-info me-1">ℹ️ Info</span>
@@ -178,9 +177,9 @@ export default function ComponentsDocs() {
         <button className="btn btn-outline-info me-2" disabled>Tiltott</button>
       </ExampleBox>
 
-      <h5>Egyedi Gomb — <code>.btn</code> (style.css)</h5>
+      <h5>Egyedi Gomb Stílus</h5>
       <CodeBlock
-        label="Egyedi CSS: style.css (turizmus projekt)"
+        label="Egyedi CSS"
         code={`.btn {\n  background-color: #4c0e5e; /* Lila/bordó */\n  border: none;\n}\n.btn:hover {\n  background-color: #3a0a48; /* Sötétebb hover */\n}`}
         lang="css"
       />
@@ -204,7 +203,7 @@ export default function ComponentsDocs() {
       </ExampleBox>
 
       <CodeBlock
-        label="Használat 2: turizmus projekt — Betűrendes lista"
+        label="Számozott lista"
         code={`<ol class="list-group list-group-numbered">\n  <li class="list-group-item">Első elem</li>\n  <li class="list-group-item">Második elem</li>\n  <li class="list-group-item">Harmadik elem</li>\n</ol>`}
       />
       <ExampleBox label="Előnézet">
@@ -217,14 +216,14 @@ export default function ComponentsDocs() {
 
       {/* ---- HERO ---- */}
       <h4 className="mt-4 pt-3 border-top">🎯 Hero Fejléc</h4>
-      <p>A projektek leggyakoribb oldalfejléce:</p>
+      <p>Gyakori oldalfejléc minta:</p>
       <CodeBlock
-        label="Használat: index.html — minden projekt"
-        code={`<div class="row">\n  <div class="col-sm-12 mb-3">\n    <div class="p-5 bg-info text-white rounded">\n      <h1 id="oldalcim">Árukergető</h1>\n      <h2 style="color: rgb(224, 230, 235);">\n        Mini számítógép konfigurációk\n      </h2>\n    </div>\n  </div>\n</div>`}
+        label="Hero fejléc"
+        code={`<div class="row">\n  <div class="col-sm-12 mb-3">\n    <div class="p-5 bg-info text-white rounded">\n      <h1>Oldal Címe</h1>\n      <h2 style="color: rgb(224, 230, 235);">\n        Alcím — Rövid leírás\n      </h2>\n    </div>\n  </div>\n</div>`}
       />
       <ExampleBox label="Előnézet">
         <div className="p-5 bg-info text-white rounded">
-          <h1 style={{ fontSize: '300%', textTransform: 'uppercase', fontStyle: 'italic' }}>Projekt Cím</h1>
+          <h1 style={{ fontSize: '300%', textTransform: 'uppercase', fontStyle: 'italic' }}>Oldal Címe</h1>
           <h2 style={{ color: 'rgb(224, 230, 235)' }}>Alcím — Rövid leírás</h2>
         </div>
       </ExampleBox>

@@ -4,14 +4,14 @@ export default function GridDocs() {
   return (
     <DocSection id="grid" title="📐 Bootstrap Grid Rendszer">
       <p>
-        A projektekben a Bootstrap 12-oszlopos grid rendszerét használjuk reszponzív elrendezések építésére.
+        A Bootstrap 12-oszlopos grid rendszere reszponzív elrendezések építésére.
         Az alábbi töréspontok érhetők el:
       </p>
 
       <div className="table-responsive mb-4">
         <table className="table table-bordered table-sm">
           <thead className="table-light">
-            <tr><th>Prefix</th><th>Min. szélesség</th><th>Használat a projektekben</th></tr>
+            <tr><th>Prefix</th><th>Min. szélesség</th><th>Leírás</th></tr>
           </thead>
           <tbody>
             <tr><td><code>col-*</code></td><td>&lt; 576px</td><td>Mobil elsődleges</td></tr>
@@ -22,9 +22,9 @@ export default function GridDocs() {
         </table>
       </div>
 
-      <h4>4 Oszlopos Termékkártya Rács</h4>
+      <h4>4 Oszlopos Rács</h4>
       <p>
-        A <strong>minigépek</strong> projektben használt minta: mobil nézetben 2 oszlop (<code>col-sm-6</code>),
+        Gyakori minta: mobil nézetben 2 oszlop (<code>col-sm-6</code>),
         asztali nézetben 4 oszlop (<code>col-md-3</code>).
       </p>
       <CodeBlock
@@ -65,9 +65,9 @@ export default function GridDocs() {
       </ExampleBox>
 
       <h4>3 Oszlopos Képgaléria</h4>
-      <p>A <strong>turizmus</strong> és <strong>tömegközlekedés</strong> projektekben használt minta.</p>
+      <p>Hat kép elrendezése: mobil nézetben 3 oszlop, asztali nézetben 6 oszlop.</p>
       <CodeBlock
-        label="Használat: turizmus_es_vendeglatas.html"
+        label="Képgaléria rács"
         code={`<div class="row">\n  <div class="col-sm-4 col-md-2">\n    <img class="img-fluid w-100" src="kep.jpg" alt="Kép">\n  </div>\n  <div class="col-sm-4 col-md-2">\n    <img class="img-fluid w-100" src="kep.jpg" alt="Kép">\n  </div>\n  <!-- ... további 4 kép ... -->\n</div>`}
       />
       <ExampleBox label="Előnézet">

@@ -4,13 +4,13 @@ export default function TypographyDocs() {
   return (
     <DocSection id="typography" title="🔤 Tipográfia és Szövegformázás">
       <p>
-        A Bootstrap beépített tipográfiai osztályai és a projektek egyedi szövegstílusai.
+        Bootstrap tipográfiai osztályok és gyakori egyedi szövegstílusok.
       </p>
 
       <h4>Fejlécek (h1–h6)</h4>
-      <p>A <strong>jegyzet</strong> projektben egyedi lila fejléc szín, a <strong>tömegközlekedés</strong> projektben egyedi bordó.</p>
+      <p>Egyedi fejléc színek CSS-ben — lila és bordó változat.</p>
       <CodeBlock
-        label="Egyedi CSS: egyeni.css (jegyzet projekt)"
+        label="Egyedi CSS — lila fejléc"
         code={`h1 {\n  color: rgb(77, 56, 194); /* Lila fejléc */\n}`}
         lang="css"
       />
@@ -39,21 +39,21 @@ export default function TypographyDocs() {
       </ExampleBox>
 
       <h4>Oldalcím Stílus — <code>#oldalcim</code></h4>
-      <p>A <strong>minigépek</strong> projekt egyedi főcíme:</p>
+      <p>Nagy méretű, nagybetűs, dőlt főcím stílus:</p>
       <CodeBlock
-        label="Egyedi CSS: sajat.css"
+        label="Egyedi CSS"
         code={`#oldalcim {\n  font-size: 300%;\n  text-transform: uppercase;\n  font-style: italic;\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
         <h1 style={{ fontSize: '300%', textTransform: 'uppercase', fontStyle: 'italic' }}>
-          Árukergető
+          Példa Cím
         </h1>
       </ExampleBox>
 
       <h4>Szöveg Igazítás</h4>
       <CodeBlock
-        label="Használat: tömegközlekedés projekt"
+        label="Sorkizárt szöveg"
         code={`p {\n  text-align: justify; /* Sorkizárt szöveg */\n  font-size: 15px;\n}`}
         lang="css"
       />
@@ -67,9 +67,9 @@ export default function TypographyDocs() {
       </ExampleBox>
 
       <h4>Piros Kiemelés — <code>.piros</code></h4>
-      <p>A <strong>turizmus</strong> és <strong>hungarikum</strong> projektekben használt egyedi osztály:</p>
+      <p>Egyedi piros szövegkiemelő osztály:</p>
       <CodeBlock
-        label="Egyedi CSS: style.css"
+        label="Egyedi CSS"
         code={`.piros {\n  color: rgb(197, 17, 17);\n}`}
         lang="css"
       />
@@ -79,15 +79,15 @@ export default function TypographyDocs() {
         </p>
       </ExampleBox>
 
-      <h4>Dőlt Stílus — <code>#turizmus</code></h4>
+      <h4>Dőlt Stílus — <code>oblique</code></h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (hungari)"
-        code={`#turizmus {\n  font-style: oblique; /* Dőlt stílus */\n}`}
+        label="Egyedi CSS"
+        code={`.oblique-text {\n  font-style: oblique; /* Dőlt stílus */\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
         <p style={{ fontStyle: 'oblique', fontSize: '1.2rem' }}>
-          Ez egy ferde (oblique) stílusú szöveg, a turizmus oldal speciális elemeként.
+          Ez egy ferde (oblique) stílusú szöveg — dekoratív elemekhez.
         </p>
       </ExampleBox>
     </DocSection>

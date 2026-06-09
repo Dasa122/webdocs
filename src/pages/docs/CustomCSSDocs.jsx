@@ -4,13 +4,13 @@ export default function CustomCSSDocs() {
   return (
     <DocSection id="custom-css" title="🎨 Egyedi CSS Minták és Haladó Stílusok">
       <p>
-        A projektekben használt egyedi CSS szabályok, amelyek kiegészítik a Bootstrap keretrendszert.
+        Hasznos egyedi CSS szabályok, amelyek kiegészítik a Bootstrap keretrendszert.
       </p>
 
       {/* Akcio */}
-      <h4 className="mt-4 pt-3 border-top">🏷️ Akciós Ár — <code>.akcio</code></h4>
+      <h4 className="mt-4 pt-3 border-top">🏷️ Kiemelt Ár — <code>.akcio</code></h4>
       <CodeBlock
-        label="Egyedi CSS: sajat.css (minigépek projekt)"
+        label="Egyedi CSS"
         code={`.akcio {\n  color: rgb(255, 100, 100);\n  font-weight: bold;\n  text-decoration: underline;\n}`}
         lang="css"
       />
@@ -22,7 +22,7 @@ export default function CustomCSSDocs() {
       {/* Fejlec */}
       <h4 className="mt-4 pt-3 border-top">🖼️ Fejléc Háttérképpel — <code>#fejlec</code></h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (turizmus + tömegközlekedés)"
+        label="Egyedi CSS"
         code={`#fejlec {\n  background-image: url('fejlec.jpg');\n  background-position: top right;\n  background-size: contain;\n  background-repeat: no-repeat;\n  height: 150px;\n}`}
         lang="css"
       />
@@ -36,9 +36,9 @@ export default function CustomCSSDocs() {
       </ExampleBox>
 
       {/* Gradiens */}
-      <h4 className="mt-4 pt-3 border-top">🌈 Gradiens Szöveg — <code>#gradient_piros_feher_zold</code></h4>
+      <h4 className="mt-4 pt-3 border-top">🌈 Gradiens Szöveg</h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (web_forras)"
+        label="Egyedi CSS"
         code={`#gradient_piros_feher_zold {\n  background: linear-gradient(to right, red, white, green);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  /* Nemzeti színek: piros-fehér-zöld */\n}`}
         lang="css"
       />
@@ -56,7 +56,7 @@ export default function CustomCSSDocs() {
       {/* Body Gradient */}
       <h4 className="mt-4 pt-3 border-top">📄 Oldalháttér Gradiens — <code>body</code></h4>
       <CodeBlock
-        label="Egyedi CSS: egyeni.css (1956-os forradalom)"
+        label="Egyedi CSS"
         code={`body {\n  background: linear-gradient(to bottom,\n    white, green, red);\n}`}
         lang="css"
       />
@@ -74,7 +74,7 @@ export default function CustomCSSDocs() {
       {/* Cell Backgrounds */}
       <h4 className="mt-4 pt-3 border-top">📦 Cella Háttérszínek — <code>.cellaHatter</code></h4>
       <CodeBlock
-        label="Egyedi CSS: egyeni.css (jegyzet projekt)"
+        label="Egyedi CSS"
         code={`.cellaHatter  { background-color: rgb(238, 233, 226); }\n.cellaHatter2 { background-color: rgb(238, 233, 226); }\n.cellaHatter3 { background-color: rgb(238, 233, 226); }`}
         lang="css"
       />
@@ -93,7 +93,7 @@ export default function CustomCSSDocs() {
       {/* First Letter */}
       <h4 className="mt-4 pt-3 border-top">🔤 Első Betű Kiemelése — <code>::first-letter</code></h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (hungari)"
+        label="Egyedi CSS"
         code={`.list-group-item::first-letter {\n  color: red; /* Piros első betű */\n}`}
         lang="css"
       />
@@ -108,13 +108,13 @@ export default function CustomCSSDocs() {
       {/* Footer */}
       <h4 className="mt-4 pt-3 border-top">🦶 Egyedi Lábléc — <code>footer</code></h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (tömegközlekedés)"
+        label="Egyedi CSS"
         code={`footer {\n  background-color: #4c0e5e; /* Lila/bordó */\n}\nfooter a {\n  color: white;\n  text-decoration: none;\n}`}
         lang="css"
       />
       <ExampleBox label="Előnézet">
         <footer className="rounded p-3 text-white" style={{ backgroundColor: '#4c0e5e' }}>
-          <p className="mb-1">© 2026 Projekt — Minden jog fenntartva</p>
+          <p className="mb-1">© 2026 — Minden jog fenntartva</p>
           <a href="#s" className="text-white text-decoration-none">Kapcsolat</a>
           {' | '}
           <a href="#s" className="text-white text-decoration-none">Adatvédelem</a>
@@ -124,19 +124,19 @@ export default function CustomCSSDocs() {
       {/* Scrollbar */}
       <h4 className="mt-4 pt-3 border-top">📜 Mindig Látható Scrollbar</h4>
       <CodeBlock
-        label="Egyedi CSS: sajat.css"
+        label="Egyedi CSS"
         code={`html {\n  overflow-y: scroll; /* Mindig látszik a görgetősáv */\n}`}
         lang="css"
       />
       <p className="text-muted">
         Ez a szabály megakadályozza, hogy az oldal "ugráljon" amikor a scrollbar megjelenik/eltűnik 
-        a rövid és hosszú oldalak között váltáskor. <strong>Minden projektben használva.</strong>
+        a rövid és hosszú oldalak között váltáskor. <strong>Gyakori minta.</strong>
       </p>
 
       {/* Text Indent */}
       <h4 className="mt-4 pt-3 border-top">📝 Bekezdés Behúzás — <code>text-indent</code></h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (web_forras)"
+        label="Egyedi CSS"
         code={`p {\n  text-align: justify;\n  text-indent: 20px;\n}`}
         lang="css"
       />
@@ -144,15 +144,14 @@ export default function CustomCSSDocs() {
         <p style={{ textAlign: 'justify', textIndent: '20px' }}>
           Ez a bekezdés 20px-es behúzással kezdődik. A Lorem ipsum dolor sit amet, consectetur 
           adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ez a stílus a web_forras projektben található, és a hagyományos nyomtatott szövegek 
-          megjelenését idézi.
+          Ez a stílus a hagyományos nyomtatott szövegek megjelenését idézi.
         </p>
       </ExampleBox>
 
       {/* Overlay text */}
-      <h4 className="mt-4 pt-3 border-top">🌑 Árnyék Szöveg — <code>.shadow</code></h4>
+      <h4 className="mt-4 pt-3 border-top">🌑 Árnyékolt Szöveg</h4>
       <CodeBlock
-        label="Egyedi CSS: style.css (web_forras)"
+        label="Egyedi CSS"
         code={`.shadow {\n  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);\n}`}
         lang="css"
       />

@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import OverviewDocs from './docs/OverviewDocs';
+import BootstrapDocs from './docs/BootstrapDocs';
 import GridDocs from './docs/GridDocs';
 import TypographyDocs from './docs/TypographyDocs';
 import ComponentsDocs from './docs/ComponentsDocs';
@@ -8,6 +8,7 @@ import CustomCSSDocs from './docs/CustomCSSDocs';
 
 const sidebarItems = [
   { id: 'overview', label: '📋 Áttekintés' },
+  { id: 'bootstrap', label: '🥾 Bootstrap 5 Referencia' },
   { id: 'grid', label: '📐 Grid Rendszer' },
   { id: 'typography', label: '🔤 Tipográfia' },
   { id: 'components', label: '🧩 Komponensek' },
@@ -27,7 +28,7 @@ export default function Docs() {
         {/* Sidebar */}
         <nav className="col-md-3 col-lg-2 d-md-block bg-light sidebar p-3" style={{ minHeight: '100vh', borderRight: '1px solid #dee2e6' }}>
           <h5 className="mb-3">
-            <Link to="/" className="text-decoration-none">← Kezdőlap</Link>
+            <strong>📚 Bootstrap 5 + CSS Docs</strong>
           </h5>
           <h6 className="text-muted text-uppercase small mb-2">Dokumentáció</h6>
           <ul className="nav flex-column">
@@ -45,15 +46,13 @@ export default function Docs() {
           </ul>
           <hr />
           <div className="small text-muted mt-3">
-            <p className="mb-1"><strong>Projektek:</strong></p>
+            <p className="mb-1"><strong>Tartalom:</strong></p>
             <ul className="list-unstyled ps-2 small">
-              <li>• minigépek</li>
-              <li>• turizmus</li>
-              <li>• tömegközlekedés</li>
-              <li>• hungarikum</li>
-              <li>• web_forras</li>
-              <li>• jegyzet</li>
-              <li>• 1956 forradalom</li>
+              <li>• Grid rendszer</li>
+              <li>• Tipográfia</li>
+              <li>• Komponensek A-Z</li>
+              <li>• Segédosztályok</li>
+              <li>• Egyedi CSS minták</li>
             </ul>
           </div>
         </nav>
@@ -68,12 +67,12 @@ export default function Docs() {
           </div>
 
           <p className="lead text-muted mb-4">
-            Teljes körű referencia a projektekben használt összes Bootstrap komponensről,
-            segédosztályról és egyedi CSS mintáról. Minden szekció tartalmazza a valós kódmintákat
-            és interaktív előnézeteket.
+            Bootstrap 5 + CSS gyors referencia — komponensek, segédosztályok és egyedi stílusok
+            kódpéldákkal és interaktív előnézetekkel. Másold ki, próbáld ki.
           </p>
 
           <OverviewDocs />
+          <BootstrapDocs />
           <GridDocs />
           <TypographyDocs />
           <ComponentsDocs />
@@ -81,12 +80,7 @@ export default function Docs() {
           <CustomCSSDocs />
 
           <footer className="text-center text-muted py-4 mt-5 border-top">
-            <p>
-              <span className="badge bg-info me-2">Czikkely Imre</span>
-              <span className="badge bg-info me-2">10.E</span>
-              <span className="badge bg-secondary">2026.06.09.</span>
-            </p>
-            <small>Dokumentáció a webgyak projektek alapján — Bootstrap 5 + Egyedi CSS</small>
+            <small>Bootstrap 5 + CSS Docs — Bun + React + Vite</small>
           </footer>
         </main>
       </div>

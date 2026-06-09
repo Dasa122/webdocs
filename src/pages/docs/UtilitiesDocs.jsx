@@ -4,7 +4,7 @@ export default function UtilitiesDocs() {
   return (
     <DocSection id="utilities" title="🛠️ Bootstrap Segédosztályok">
       <p>
-        A projektekben gyakran használt Bootstrap utility osztályok gyűjteménye.
+        Bootstrap 5 utility (segéd) osztályok gyűjteménye.
       </p>
 
       <h4>📏 Térközök (Spacing)</h4>
@@ -65,10 +65,10 @@ export default function UtilitiesDocs() {
             <tr><th>Osztály</th><th>Szín</th><th>Használat</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>bg-light</code></td><td>#f8f9fa</td><td>✅ Konténer háttér (MINDEN projekt)</td></tr>
+            <tr><td><code>bg-light</code></td><td>#f8f9fa</td><td>✅ Konténer háttér</td></tr>
             <tr><td><code>bg-info</code></td><td>#0dcaf0</td><td>✅ Hero fejléc, kártya fejléc</td></tr>
             <tr><td><code>bg-white</code></td><td>white</td><td>Kártya törzs</td></tr>
-            <tr><td><code>bg-success</code></td><td>#198754</td><td>Hungarikum badge</td></tr>
+            <tr><td><code>bg-success</code></td><td>#198754</td><td>Sikeres / aktív státusz</td></tr>
             <tr><td><code>bg-danger</code></td><td>#dc3545</td><td>Figyelmeztetés</td></tr>
             <tr><td><code>bg-warning</code></td><td>#ffc107</td><td>Kiemelés</td></tr>
             <tr><td><code>bg-body-tertiary</code></td><td>#f8f9fa</td><td>Navbar háttér</td></tr>
@@ -94,7 +94,7 @@ export default function UtilitiesDocs() {
 
       <h4 className="mt-4 pt-3 border-top">🖼️ Képek (Images)</h4>
       <CodeBlock
-        label="Minden projektben használt kép osztályok"
+        label="Reszponzív kép osztályok"
         code={`<img src="kep.jpg" class="img-fluid" alt="Leírás">\n<img src="kep.jpg" class="img-fluid rounded" alt="Leírás">\n<img src="kep.jpg" class="img-fluid w-100" alt="Leírás">`}
       />
       <ExampleBox label="Előnézet">

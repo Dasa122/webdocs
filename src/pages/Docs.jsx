@@ -9,6 +9,7 @@ import JumboDocs from './docs/JumboDocs';
 import FloatDocs from './docs/FloatDocs';
 import CustomCSSDocs from './docs/CustomCSSDocs';
 import PythonDocs from './docs/PythonDocs';
+import PacketTracerDocs from './docs/PacketTracerDocs';
 
 /* ============================================================
    ONLY patterns from: cinko/001_jegyzet/index.html + egyeni.css
@@ -148,6 +149,80 @@ const pythonTree = [
   },
 ];
 
+const packetTracerTree = [
+  {
+    id: 'pt-basic', icon: '🔧', label: 'Alapvető beállítások',
+    searchText: 'hostname enable secret password banner line console vty running-config startup-config',
+    children: [
+      { id: 'pt-basic', label: 'EXEC módok — user, privileged, config', anchor: 'pt-basic' },
+      { id: 'pt-basic', label: 'Hostname, jelszavak, titkosítás', anchor: 'pt-basic' },
+      { id: 'pt-basic', label: 'Konfiguráció mentése (copy, write)', anchor: 'pt-basic' },
+    ],
+  },
+  {
+    id: 'pt-interfaces', icon: '🌐', label: 'Interfészek és IP-címzés',
+    searchText: 'interface ip address no shutdown gigabit serial clock rate svi',
+    children: [
+      { id: 'pt-interfaces', label: 'Router interfész + IP-cím', anchor: 'pt-interfaces' },
+      { id: 'pt-interfaces', label: 'Serial + clock rate (DCE)', anchor: 'pt-interfaces' },
+      { id: 'pt-interfaces', label: 'Switch SVI + default-gateway', anchor: 'pt-interfaces' },
+      { id: 'pt-interfaces', label: 'show ip interface brief', anchor: 'pt-interfaces' },
+    ],
+  },
+  {
+    id: 'pt-routing', icon: '🗺️', label: 'Forgalomirányítás (Routing)',
+    searchText: 'ip route static ospf network area router-id wildcard mask passive-interface',
+    children: [
+      { id: 'pt-routing', label: 'Statikus route + default route', anchor: 'pt-routing' },
+      { id: 'pt-routing', label: 'OSPF konfiguráció', anchor: 'pt-routing' },
+      { id: 'pt-routing', label: 'Wildcard mask referencia', anchor: 'pt-routing' },
+    ],
+  },
+  {
+    id: 'pt-switching', icon: '🔀', label: 'Switching és VLAN-ok',
+    searchText: 'vlan switchport mode access trunk dot1Q encapsulation native router-on-a-stick',
+    children: [
+      { id: 'pt-switching', label: 'VLAN létrehozás + port hozzárendelés', anchor: 'pt-switching' },
+      { id: 'pt-switching', label: 'Trunk port + allowed VLAN', anchor: 'pt-switching' },
+      { id: 'pt-switching', label: 'Router-on-a-Stick (subinterface)', anchor: 'pt-switching' },
+    ],
+  },
+  {
+    id: 'pt-security', icon: '🔒', label: 'SSH, ACL, Port Security',
+    searchText: 'ssh crypto key rsa access-list permit deny port-security mac-address sticky violation',
+    children: [
+      { id: 'pt-security', label: 'SSH konfiguráció', anchor: 'pt-security' },
+      { id: 'pt-security', label: 'Standard + Extended ACL', anchor: 'pt-security' },
+      { id: 'pt-security', label: 'Port Security (MAC szűrés)', anchor: 'pt-security' },
+    ],
+  },
+  {
+    id: 'pt-services', icon: '⚙️', label: 'DHCP, NAT, NTP',
+    searchText: 'dhcp pool excluded-address nat inside outside overload pat',
+    children: [
+      { id: 'pt-services', label: 'DHCP szerver routeren', anchor: 'pt-services' },
+      { id: 'pt-services', label: 'Statikus + Dinamikus NAT/PAT', anchor: 'pt-services' },
+    ],
+  },
+  {
+    id: 'pt-cdp', icon: '🔍', label: 'Hibakeresés és Diagnosztika',
+    searchText: 'ping traceroute cdp lldp neighbors arp mac address-table debug',
+    children: [
+      { id: 'pt-cdp', label: 'Ping, traceroute, telnet', anchor: 'pt-cdp' },
+      { id: 'pt-cdp', label: 'CDP + LLDP szomszédok', anchor: 'pt-cdp' },
+      { id: 'pt-cdp', label: 'ARP + MAC-cím tábla', anchor: 'pt-cdp' },
+    ],
+  },
+  {
+    id: 'pt-reference', icon: '📋', label: 'Gyorsreferencia — Show parancsok',
+    searchText: 'show running-config startup-config version ip route vlan access-lists',
+    children: [
+      { id: 'pt-reference', label: 'Top 20 show parancs', anchor: 'pt-reference' },
+      { id: 'pt-reference', label: 'Hasznos linkek', anchor: 'pt-reference' },
+    ],
+  },
+];
+
 /* ---- Scroll-spy ---- */
 function useScrollSpy(ids, offset = 80) {
   const [active, setActive] = useState(ids[0]);
@@ -219,7 +294,7 @@ export default function Docs() {
     sidebarTree.forEach(n => { init[n.id] = true; });
     return init;
   });
-  const currentTree = mode === 'python' ? pythonTree : sidebarTree;
+  const currentTree = mode === 'python' ? pythonTree : mode === 'packet-tracer' ? packetTracerTree : sidebarTree;
 
   const contentRef = useRef(null);
   const parentIds = useMemo(() => currentTree.map(n => n.id), [currentTree]);
@@ -264,7 +339,8 @@ export default function Docs() {
     setSearch('');
     setSidebarOpen(false);
     const a = {};
-    (newMode === 'python' ? pythonTree : sidebarTree).forEach(n => { a[n.id] = true; });
+    const tree = newMode === 'python' ? pythonTree : newMode === 'packet-tracer' ? packetTracerTree : sidebarTree;
+    tree.forEach(n => { a[n.id] = true; });
     setExpanded(a);
   };
 
@@ -284,7 +360,11 @@ export default function Docs() {
     <PythonDocs key="python" />,
   ], []);
 
-  const contentEls = mode === 'python' ? pythonContent : bootstrapContent;
+  const packetTracerContent = useMemo(() => [
+    <PacketTracerDocs key="packet-tracer" />,
+  ], []);
+
+  const contentEls = mode === 'python' ? pythonContent : mode === 'packet-tracer' ? packetTracerContent : bootstrapContent;
 
   const sectionMap = useMemo(() => {
     const m = {};
@@ -298,8 +378,8 @@ export default function Docs() {
 
       <aside className={`docs-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
-          <span className="brand-icon">{mode === 'python' ? '🐍' : '📚'}</span>
-          <div><strong>{mode === 'python' ? 'Python' : 'Bootstrap 5'}</strong><small>{mode === 'python' ? ' Alapok' : '+ CSS Docs'}</small></div>
+          <span className="brand-icon">{mode === 'python' ? '🐍' : mode === 'packet-tracer' ? '🔧' : '📚'}</span>
+          <div><strong>{mode === 'python' ? 'Python' : mode === 'packet-tracer' ? 'Packet Tracer' : 'Bootstrap 5'}</strong><small>{mode === 'python' ? ' Alapok' : mode === 'packet-tracer' ? ' IOS' : '+ CSS Docs'}</small></div>
         </div>
         <div className="sidebar-mode-switch">
           <button
@@ -313,6 +393,12 @@ export default function Docs() {
             onClick={() => switchMode('python')}
           >
             🐍 Python
+          </button>
+          <button
+            className={`mode-btn ${mode === 'packet-tracer' ? 'active' : ''}`}
+            onClick={() => switchMode('packet-tracer')}
+          >
+            🔧 Packet Tracer
           </button>
         </div>
         <div className="sidebar-search">
@@ -338,7 +424,7 @@ export default function Docs() {
 
       <header className="docs-mobile-header">
         <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>{sidebarOpen ? '✕' : '☰'}</button>
-        <span className="mobile-brand">{mode === 'python' ? '🐍 Python Alapok' : '📚 Bootstrap 5 + CSS Docs'}</span>
+        <span className="mobile-brand">{mode === 'python' ? '🐍 Python Alapok' : mode === 'packet-tracer' ? '🔧 Packet Tracer IOS' : '📚 Bootstrap 5 + CSS Docs'}</span>
       </header>
 
       <main className="docs-main">
@@ -353,7 +439,7 @@ export default function Docs() {
                 <span className="badge bg-success">CSS3</span>
               </div>
             </>
-          ) : (
+          ) : mode === 'python' ? (
             <>
               <h1>🐍 Python Alapok Dokumentáció</h1>
               <p>Input, listák, osztályok, fájlkezelés — Python programozási alapok gyakorlati példákkal.</p>
@@ -363,12 +449,22 @@ export default function Docs() {
                 <span className="badge bg-success">OOP</span>
               </div>
             </>
+          ) : (
+            <>
+              <h1>🔧 Packet Tracer IOS Dokumentáció</h1>
+              <p>Cisco IOS parancsok és konfigurációs minták — router, switch, VLAN, OSPF, ACL, NAT és több.</p>
+              <div className="hero-badges">
+                <span className="badge bg-primary">Cisco IOS</span>
+                <span className="badge bg-warning text-dark">CCNA</span>
+                <span className="badge bg-success">Packet Tracer</span>
+              </div>
+            </>
           )}
         </div>
         <div className="docs-content" ref={contentRef}>
           {currentTree.map(s => <div key={s.id}>{sectionMap[s.id]}</div>)}
         </div>
-        <footer className="docs-footer"><p>{mode === 'python' ? 'Python Alapok — Bun + React + Vite' : 'Bootstrap 5 + CSS Docs — Bun + React + Vite'}</p></footer>
+        <footer className="docs-footer"><p>{mode === 'python' ? 'Python Alapok' : mode === 'packet-tracer' ? 'Packet Tracer IOS' : 'Bootstrap 5 + CSS Docs'} — Bun + React + Vite</p></footer>
       </main>
     </div>
   );

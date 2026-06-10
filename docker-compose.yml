@@ -1,11 +1,29 @@
-version: '3.8'
-
 services:
+  # ── Local dev/preview server (nginx on :8080) ───────────────────
   docs:
     build:
       context: .
       dockerfile: Dockerfile
+      target: production
     ports:
       - '8080:80'
     restart: unless-stopped
     container_name: bootstrap-docs
+
+  # ── GitHub Pages deploy ─────────────────────────────────────────
+  #  docker compose up prod  → build & push dist/ to gh-pages branch
+  prod:
+    image: alpine:3.21
+    volumes:
+      - .:/workspace:rw
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${SSH_AUTH_SOCK:-/dev/null}:${SSH_AUTH_SOCK:-/tmp/ssh-agent}
+    working_dir: /workspace
+    environment:
+      - BASE_URL=${BASE_URL:-/}
+      - CUSTOM_DOMAIN=${CUSTOM_DOMAIN:-}
+      - GIT_USER_NAME=${GIT_USER_NAME:-CI Bot}
+      - GIT_USER_EMAIL=${GIT_USER_EMAIL:-ci@localhost}
+      - SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-/tmp/ssh-agent}
+      - GIT_SSH_COMMAND=ssh -o StrictHostKeyChecking=accept-new
+    entrypoint: ["/bin/sh", "/workspace/deploy-entrypoint.sh"]

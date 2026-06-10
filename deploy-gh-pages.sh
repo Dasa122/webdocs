@@ -50,7 +50,7 @@ if [ ! -f .env ]; then
   echo "     cp .env.example .env"
   echo ""
 
-  if [ -f /.dockerenv ] || [ -n "${CI:-}" ]; then
+  if [ -f /.dockerenv ] || [ -n "${CI:-}" ] || [ ! -t 0 ]; then
     echo "   Running non-interactively — continuing without .env..."
   else
     read -rp "   Continue without .env? [y/N] " REPLY

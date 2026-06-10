@@ -3,9 +3,13 @@ FROM oven/bun:1 AS builder
 WORKDIR /app
 
 COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile --production
+RUN bun install --frozen-lockfile
 
 COPY . .
+
+ARG BASE_URL
+ENV BASE_URL=$BASE_URL
+
 RUN bun run build
 
 # ---- Production stage ----

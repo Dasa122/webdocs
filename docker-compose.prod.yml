@@ -9,5 +9,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: builder
       args:
         BASE_URL: ${BASE_URL:-/}

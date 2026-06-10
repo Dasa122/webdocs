@@ -79,7 +79,7 @@ CONTAINER_ID=$(docker create "$IMAGE_NAME" 2>/dev/null) || {
 
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
-docker cp "$CONTAINER_ID:/dist/." "$TMP_DIR/"
+docker cp "$CONTAINER_ID:/app/dist/." "$TMP_DIR/"
 docker rm "$CONTAINER_ID" > /dev/null
 
 echo "  → Extracted $(find "$TMP_DIR" -type f | wc -l) files"

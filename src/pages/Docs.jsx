@@ -40,7 +40,7 @@ const sidebarTree = [
       { id: 'nav', label: 'Horgony linkek (#menupont)', anchor: 'nav' },
     ],
   },
-  {.env.example
+  {
     id: 'jumbo', icon: '🎯', label: 'Fejléc (Jumbotron)',
     searchText: 'mt-4 p-5 bg-warning text-white rounded h1',
     children: [
@@ -121,7 +121,7 @@ function useScrollSpy(ids, offset = 80) {
 function TreeNode({ node, activeId, search, expanded, onToggle, onSelect, depth }) {
   const hasChildren = node.children?.length > 0;
   const isExpanded = expanded[node.id] ?? false;
-  const effectiveExpanded = search ? true : isExpa.env.examplended;
+  const effectiveExpanded = search ? true : isExpanded;
   const isActive = activeId === node.id;
 
   const visibleChildren = search

@@ -1,0 +1,13 @@
+# ── Production build compose file ────────────────────────────────────
+# Used by deploy-gh-pages.sh to build the static site image.
+# The image is tagged as bootstrap-docs-prod:latest for extraction.
+# ──────────────────────────────────────────────────────────────────────
+
+services:
+  prod:
+    image: bootstrap-docs-prod:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_URL: ${BASE_URL:-/}

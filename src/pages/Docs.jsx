@@ -8,6 +8,7 @@ import ImageDocs from './docs/ImageDocs';
 import JumboDocs from './docs/JumboDocs';
 import FloatDocs from './docs/FloatDocs';
 import CustomCSSDocs from './docs/CustomCSSDocs';
+import PythonDocs from './docs/PythonDocs';
 
 /* ============================================================
    ONLY patterns from: cinko/001_jegyzet/index.html + egyeni.css
@@ -97,6 +98,56 @@ const sidebarTree = [
   },
 ];
 
+const pythonTree = [
+  {
+    id: 'python-basics', icon: '🐍', label: 'Alapok — Input, Számolás, Feltétel',
+    searchText: 'input print int float f-string if else and or osztas atlag',
+    children: [
+      { id: 'python-basics', label: 'input() — felhasználói adatbekérés', anchor: 'python-basics' },
+      { id: 'python-basics', label: 'int(), float() — típuskonverzió', anchor: 'python-basics' },
+      { id: 'python-basics', label: 'f-string — formázott kiíratás', anchor: 'python-basics' },
+      { id: 'python-basics', label: 'if/else — feltételes elágazás', anchor: 'python-basics' },
+    ],
+  },
+  {
+    id: 'python-lists', icon: '📋', label: 'Listák és Keresés',
+    searchText: 'lista for in len return input in operator tagsag',
+    children: [
+      { id: 'python-lists', label: 'Lista definíció és bejárás', anchor: 'python-lists' },
+      { id: 'python-lists', label: 'in operátor — tagság vizsgálata', anchor: 'python-lists' },
+      { id: 'python-lists', label: 'len() — leghosszabb elem keresése', anchor: 'python-lists' },
+    ],
+  },
+  {
+    id: 'python-classes', icon: '🏗️', label: 'Osztályok és Adatszerkezetek',
+    searchText: 'class init self str objektum open file csv strip split readline with',
+    children: [
+      { id: 'python-classes', label: 'class + __init__ — osztály definíció', anchor: 'python-classes' },
+      { id: 'python-classes', label: 'Fájl beolvasás — open(), with, split()', anchor: 'python-classes' },
+      { id: 'python-classes', label: 'Objektum lista feldolgozása', anchor: 'python-classes' },
+    ],
+  },
+  {
+    id: 'python-dicts', icon: '📖', label: 'Szótárak (Dictionary)',
+    searchText: 'dict dictionary szotar kulcs ertek items keys values get setdefault max min sorted',
+    children: [
+      { id: 'python-dicts', label: 'Létrehozás, értékadás, lekérdezés', anchor: 'python-dicts' },
+      { id: 'python-dicts', label: 'Bejárás — keys(), values(), items()', anchor: 'python-dicts' },
+      { id: 'python-dicts', label: 'Összesítés (számlálás / gyűjtés)', anchor: 'python-dicts' },
+      { id: 'python-dicts', label: 'max / min kulcs alapján', anchor: 'python-dicts' },
+      { id: 'python-dicts', label: 'Egyedi elemek — set() alternatíva', anchor: 'python-dicts' },
+    ],
+  },
+  {
+    id: 'python-summary', icon: '📝', label: 'Összefoglaló',
+    searchText: 'tematika osszefoglalo tablazat linkek',
+    children: [
+      { id: 'python-summary', label: 'Témakörök áttekintő táblázata', anchor: 'python-summary' },
+      { id: 'python-summary', label: 'Hasznos linkek', anchor: 'python-summary' },
+    ],
+  },
+];
+
 /* ---- Scroll-spy ---- */
 function useScrollSpy(ids, offset = 80) {
   const [active, setActive] = useState(ids[0]);
@@ -160,6 +211,7 @@ function TreeNode({ node, activeId, search, expanded, onToggle, onSelect, depth 
 
 /* ============================================================ */
 export default function Docs() {
+  const [mode, setMode] = useState('bootstrap'); // 'bootstrap' | 'python'
   const [search, setSearch] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expanded, setExpanded] = useState(() => {
@@ -167,20 +219,22 @@ export default function Docs() {
     sidebarTree.forEach(n => { init[n.id] = true; });
     return init;
   });
+  const currentTree = mode === 'python' ? pythonTree : sidebarTree;
+
   const contentRef = useRef(null);
-  const parentIds = useMemo(() => sidebarTree.map(n => n.id), []);
+  const parentIds = useMemo(() => currentTree.map(n => n.id), [currentTree]);
   const activeId = useScrollSpy(parentIds);
 
   // Filter tree
   const filteredTree = useMemo(() => {
-    if (!search) return sidebarTree;
+    if (!search) return currentTree;
     const q = search.toLowerCase();
-    return sidebarTree.filter(n =>
+    return currentTree.filter(n =>
       n.label.toLowerCase().includes(q) ||
       n.searchText.toLowerCase().includes(q) ||
       (n.children || []).some(c => c.label.toLowerCase().includes(q))
     );
-  }, [search]);
+  }, [search, currentTree]);
 
   // Full-content search in DOM
   useEffect(() => {
@@ -202,10 +256,19 @@ export default function Docs() {
     setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  const expandAll = () => { const a = {}; sidebarTree.forEach(n => { a[n.id] = true; }); setExpanded(a); };
-  const collapseAll = () => { const a = {}; sidebarTree.forEach(n => { a[n.id] = false; }); setExpanded(a); };
+  const expandAll = () => { const a = {}; currentTree.forEach(n => { a[n.id] = true; }); setExpanded(a); };
+  const collapseAll = () => { const a = {}; currentTree.forEach(n => { a[n.id] = false; }); setExpanded(a); };
 
-  const contentEls = useMemo(() => [
+  const switchMode = (newMode) => {
+    setMode(newMode);
+    setSearch('');
+    setSidebarOpen(false);
+    const a = {};
+    (newMode === 'python' ? pythonTree : sidebarTree).forEach(n => { a[n.id] = true; });
+    setExpanded(a);
+  };
+
+  const bootstrapContent = useMemo(() => [
     <OverviewDocs key="overview" />,
     <GridDocs key="grid" />,
     <NavDocs key="nav" />,
@@ -217,11 +280,17 @@ export default function Docs() {
     <CustomCSSDocs key="custom-css" />,
   ], []);
 
+  const pythonContent = useMemo(() => [
+    <PythonDocs key="python" />,
+  ], []);
+
+  const contentEls = mode === 'python' ? pythonContent : bootstrapContent;
+
   const sectionMap = useMemo(() => {
     const m = {};
-    sidebarTree.forEach((s, i) => { m[s.id] = contentEls[i]; });
+    currentTree.forEach((s, i) => { m[s.id] = contentEls[i]; });
     return m;
-  }, [contentEls]);
+  }, [contentEls, currentTree]);
 
   return (
     <div className="docs-layout">
@@ -229,8 +298,22 @@ export default function Docs() {
 
       <aside className={`docs-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-brand">
-          <span className="brand-icon">📚</span>
-          <div><strong>Bootstrap 5</strong><small>+ CSS Docs</small></div>
+          <span className="brand-icon">{mode === 'python' ? '🐍' : '📚'}</span>
+          <div><strong>{mode === 'python' ? 'Python' : 'Bootstrap 5'}</strong><small>{mode === 'python' ? ' Alapok' : '+ CSS Docs'}</small></div>
+        </div>
+        <div className="sidebar-mode-switch">
+          <button
+            className={`mode-btn ${mode === 'bootstrap' ? 'active' : ''}`}
+            onClick={() => switchMode('bootstrap')}
+          >
+            🎨 Bootstrap
+          </button>
+          <button
+            className={`mode-btn ${mode === 'python' ? 'active' : ''}`}
+            onClick={() => switchMode('python')}
+          >
+            🐍 Python
+          </button>
         </div>
         <div className="sidebar-search">
           <span className="search-icon">🔍</span>
@@ -255,23 +338,37 @@ export default function Docs() {
 
       <header className="docs-mobile-header">
         <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>{sidebarOpen ? '✕' : '☰'}</button>
-        <span className="mobile-brand">📚 Bootstrap 5 + CSS Docs</span>
+        <span className="mobile-brand">{mode === 'python' ? '🐍 Python Alapok' : '📚 Bootstrap 5 + CSS Docs'}</span>
       </header>
 
       <main className="docs-main">
         <div className="docs-hero">
-          <h1>Bootstrap 5 + CSS Dokumentáció</h1>
-          <p>Az index.html és egyeni.css fájlban használt összes minta — kódpéldákkal, élő előnézetekkel.</p>
-          <div className="hero-badges">
-            <span className="badge bg-primary">Bootstrap 5.3</span>
-            <span className="badge bg-secondary">HTML5</span>
-            <span className="badge bg-success">CSS3</span>
-          </div>
+          {mode === 'bootstrap' ? (
+            <>
+              <h1>Bootstrap 5 + CSS Dokumentáció</h1>
+              <p>Az index.html és egyeni.css fájlban használt összes minta — kódpéldákkal, élő előnézetekkel.</p>
+              <div className="hero-badges">
+                <span className="badge bg-primary">Bootstrap 5.3</span>
+                <span className="badge bg-secondary">HTML5</span>
+                <span className="badge bg-success">CSS3</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <h1>🐍 Python Alapok Dokumentáció</h1>
+              <p>Input, listák, osztályok, fájlkezelés — Python programozási alapok gyakorlati példákkal.</p>
+              <div className="hero-badges">
+                <span className="badge bg-primary">Python 3</span>
+                <span className="badge bg-warning text-dark">Fájlkezelés</span>
+                <span className="badge bg-success">OOP</span>
+              </div>
+            </>
+          )}
         </div>
         <div className="docs-content" ref={contentRef}>
-          {sidebarTree.map(s => <div key={s.id}>{sectionMap[s.id]}</div>)}
+          {currentTree.map(s => <div key={s.id}>{sectionMap[s.id]}</div>)}
         </div>
-        <footer className="docs-footer"><p>Bootstrap 5 + CSS Docs — Bun + React + Vite</p></footer>
+        <footer className="docs-footer"><p>{mode === 'python' ? 'Python Alapok — Bun + React + Vite' : 'Bootstrap 5 + CSS Docs — Bun + React + Vite'}</p></footer>
       </main>
     </div>
   );

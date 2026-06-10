@@ -83,6 +83,37 @@ body {
   color: var(--sidebar-muted);
 }
 
+/* ---- Mode Switch ---- */
+.sidebar-mode-switch {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px 6px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--sidebar-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn:hover {
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+}
+
+.mode-btn.active {
+  background: rgba(99,102,241,0.2);
+  border-color: rgba(99,102,241,0.4);
+  color: #c7d2fe;
+  font-weight: 600;
+}
+
 /* ---- Search ---- */
 .sidebar-search {
   position: relative;

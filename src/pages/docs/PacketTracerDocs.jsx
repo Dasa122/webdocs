@@ -517,6 +517,706 @@ S1# show mac address-table dynamic ! Csak dinamikus bejegyzések`}
           <li><a href="https://www.packettracernetwork.com/" target="_blank" rel="noopener">Packet Tracer Network — Tutorials</a></li>
         </ul>
       </DocSection>
+      <DocSection id="pt-topology" title="🏗️ 9. ENB Vállalati Hálózat — Topológia">
+        <div className="alert alert-primary">
+          <strong>Projekt:</strong> ENB Bank — Többtelephelyes vállalati hálózat Packet Tracerben.
+        </div>
+
+        <h4>Helyszínek és eszközök</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Helyszín</th><th>Eszköz</th><th>Típus</th><th>Szerep</th></tr></thead>
+            <tbody>
+              <tr><td rowSpan="9"><strong>🏢 Eldorádó — Központi Iroda</strong><br/><small className="text-muted">Földszint (Ground Floor)</small></td><td>ENB_DHCPServer</td><td>Szerver</td><td>DHCP + DNS kiszolgáló</td></tr>
+              <tr><td>IE-9360 SENB</td><td>Switch</td><td>Központi (core) kapcsoló</td></tr>
+              <tr><td>1920 Helpdesk</td><td>Switch</td><td>Helpdesk kapcsoló</td></tr>
+              <tr><td>WLC-2504 HelpdeskWLC</td><td>WLC</td><td>Vezeték nélküli vezérlő</td></tr>
+              <tr><td>3702i HelpdeskAP1</td><td>Access Point</td><td>Helpdesk Room 1 WiFi</td></tr>
+              <tr><td>3702i HelpdeskAP2</td><td>Access Point</td><td>Helpdesk Room 2 WiFi</td></tr>
+              <tr><td>HelpdeskLaptop1</td><td>Laptop</td><td>Ügyfélszolgálat 1</td></tr>
+              <tr><td>HelpdeskLaptop2</td><td>Laptop</td><td>Ügyfélszolgálat 2</td></tr>
+              <tr><td>1941 RENB</td><td>Router</td><td>Vállalati forgalomirányító</td></tr>
+              <tr><td rowSpan="3"><strong>🏢 Eldorádó — Admin</strong><br/><small className="text-muted">1. emelet (First Floor)</small></td><td>WRT300N OfficeWR</td><td>Wireless Router</td><td>Irodai WiFi router</td></tr>
+              <tr><td>AdminPC</td><td>PC</td><td>Adminisztrációs munkaállomás</td></tr>
+              <tr><td>TrustMe.com</td><td>—</td><td>Internet hozzáférés korlátozás</td></tr>
+              <tr><td rowSpan="8"><strong>🏦 Budapest — Bankfiók</strong><br/><small className="text-muted">Branch LAN</small></td><td>1941 RBranch</td><td>Router</td><td>Fiók forgalomirányító</td></tr>
+              <tr><td>WRT300N WRBranch</td><td>Wireless Router</td><td>Fiók WiFi router</td></tr>
+              <tr><td>Switch-PT SBranch</td><td>Switch</td><td>Fiók kapcsoló</td></tr>
+              <tr><td>BranchPCWired</td><td>PC</td><td>Vezetékes munkaállomás</td></tr>
+              <tr><td>BranchPCWireless</td><td>PC</td><td>Vezeték nélküli munkaállomás</td></tr>
+              <tr><td>BranchLaptop</td><td>Laptop</td><td>Hordozható eszköz</td></tr>
+              <tr><td>BranchTablet</td><td>Tablet</td><td>Táblagép</td></tr>
+              <tr><td>BranchSmartphone</td><td>Smartphone</td><td>⚠️ Letiltva a WiFi hálózatról</td></tr>
+              <tr><td rowSpan="3"><strong>☁️ Internet</strong></td><td>DNSServer</td><td>Szerver</td><td>Külső DNS kiszolgáló</td></tr>
+              <tr><td>ChatGPT</td><td>Szerver</td><td>Internetes szolgáltatás</td></tr>
+              <tr><td>TrustMe.com</td><td>Szerver</td><td>IPv4 + IPv6 weboldal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>🌐 Hálózati áttekintés</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Hálózat</th><th>IPv4 Tartomány</th><th>IPv6 Tartomány</th><th>Helyszín</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ENB LAN</strong></td><td><code>50.60.70.128/25</code></td><td><code>2026:5:7::/64</code></td><td>Központi iroda — vezetékes</td></tr>
+              <tr><td><strong>Office LAN</strong></td><td><code>51.61.71.160/28</code></td><td>—</td><td>Központi iroda — adminisztráció</td></tr>
+              <tr><td><strong>Branch LAN</strong></td><td><code>52.62.72.64/26</code></td><td><code>2026:5:7:FF::/64</code></td><td>Bankfiók — vezetékes</td></tr>
+              <tr><td><strong>Branch WiFi</strong></td><td><code>53.63.73.96/27</code></td><td>—</td><td>Bankfiók — vezeték nélküli</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </DocSection>
+
+      <DocSection id="pt-addressing" title="📊 10. Címkiosztási Terv — Részletes">
+        <div className="alert alert-warning">
+          <strong>Fontos:</strong> A *-gal jelölt mezőket ki kell számolni a címkiosztási előírások alapján. A „Nem módosítandó" eszközökhöz nem szabad hozzányúlni!
+        </div>
+
+        <h4>🔹 ENB LAN — 50.60.70.128/25 (Központi Iroda, vezetékes)</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv4-cím</th><th>Maszk</th><th>Megjegyzés</th></tr></thead>
+            <tbody>
+              <tr><td><code>RENB</code></td><td>GigabitEthernet0/0/0</td><td><strong>50.60.70.254</strong></td><td>255.255.255.128</td><td>Utolsó érvényes cím (/25)</td></tr>
+              <tr><td><code>RENB</code></td><td>GigabitEthernet0/1/0</td><td colSpan="2" className="text-muted">Nem módosítandó</td><td>WAN kapcsolat</td></tr>
+              <tr><td><code>ENB_DHCPServer</code></td><td>Wireless0</td><td><strong>50.60.70.176</strong></td><td>255.255.255.128</td><td>48. érvényes cím</td></tr>
+              <tr><td><code>HelpdeskLaptop1</code></td><td>Wireless0</td><td colSpan="2">DHCP (ENB_DHCPServer)</td><td>Dinamikus</td></tr>
+              <tr><td><code>HelpdeskLaptop2</code></td><td>Wireless0</td><td colSpan="2">DHCP (ENB_DHCPServer)</td><td>Dinamikus</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> /25 = 255.255.255.128 → 126 használható cím (50.60.70.129–254).<br/>
+        RENB = utolsó: <code>50.60.70.254</code> | DHCP szerver = 48.: <code>50.60.70.128 + 48 = 50.60.70.176</code></p>
+
+        <h4>🔹 ENB LAN IPv6 — 2026:5:7::/64</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv6-cím</th><th>Link-Local</th></tr></thead>
+            <tbody>
+              <tr><td><code>RENB</code></td><td>GigabitEthernet0/0/0</td><td><strong>2026:5:7::1</strong></td><td><strong>FE80::1</strong></td></tr>
+              <tr><td><code>ENB_DHCPServer</code></td><td>Wireless0</td><td><strong>2026:5:7::30</strong></td><td>Automatikus</td></tr>
+              <tr><td><code>HelpdeskLaptop1</code></td><td>Wireless0</td><td colSpan="2">DHCPv6 (RENB-től)</td></tr>
+              <tr><td><code>HelpdeskLaptop2</code></td><td>Wireless0</td><td colSpan="2">DHCPv6 (RENB-től)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> RENB = első érvényes: <code>::1</code> | DHCP szerver = 48.: <code>::30</code> (0x30 = 48)</p>
+
+        <h4>🔹 Office LAN — 51.61.71.160/28 (Adminisztráció)</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv4-cím</th><th>Maszk</th><th>Megjegyzés</th></tr></thead>
+            <tbody>
+              <tr><td><code>OfficeWR</code></td><td>Internet</td><td colSpan="2">DHCP (ENB_DHCPServer → ENB LAN)</td><td>Külső port</td></tr>
+              <tr><td><code>OfficeWR</code></td><td>LAN</td><td><strong>51.61.71.174</strong></td><td>255.255.255.240</td><td>Utolsó érvényes cím (/28)</td></tr>
+              <tr><td><code>AdminPC</code></td><td>FastEthernet0</td><td><strong>51.61.71.164</strong></td><td>255.255.255.240</td><td>Fenntartott DHCP: 4. cím</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> /28 = 255.255.255.240 → 14 használható cím (51.61.71.161–174).<br/>
+        OfficeWR LAN = utolsó: <code>.174</code> | AdminPC = 4.: <code>51.61.71.160 + 4 = 51.61.71.164</code><br/>
+        ⚠️ Ez a hálózat NEM használ IPv6-ot.</p>
+
+        <h4>🔹 Branch LAN — 52.62.72.64/26 (Bankfiók, vezetékes)</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv4-cím</th><th>Maszk</th><th>Megjegyzés</th></tr></thead>
+            <tbody>
+              <tr><td><code>RBranch</code></td><td>GigabitEthernet0/0</td><td><strong>52.62.72.126</strong></td><td>255.255.255.192</td><td>Utolsó érvényes cím (/26)</td></tr>
+              <tr><td><code>RBranch</code></td><td>GigabitEthernet0/1/0</td><td colSpan="2" className="text-muted">Nem módosítandó</td><td>WAN kapcsolat</td></tr>
+              <tr><td><code>SBranch</code></td><td>VLAN 1</td><td><strong>52.62.72.125</strong></td><td>255.255.255.192</td><td>Utolsó előtti cím</td></tr>
+              <tr><td><code>BranchPCWired</code></td><td>FastEthernet0</td><td><strong>52.62.72.80</strong></td><td>255.255.255.192</td><td>16. érvényes cím</td></tr>
+              <tr><td><code>WRBranch</code></td><td>Internet</td><td><strong>52.62.72.96</strong></td><td>255.255.255.192</td><td>32. érvényes cím</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> /26 = 255.255.255.192 → 62 használható cím (52.62.72.65–126).<br/>
+        RBranch = utolsó: <code>.126</code> | SBranch = utolsó előtti: <code>.125</code><br/>
+        BranchPCWired = 16.: <code>52.62.72.64 + 16 = 52.62.72.80</code><br/>
+        WRBranch Internet = 32.: <code>52.62.72.64 + 32 = 52.62.72.96</code></p>
+
+        <h4>🔹 Branch LAN IPv6 — 2026:5:7:FF::/64</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv6-cím</th><th>Link-Local</th></tr></thead>
+            <tbody>
+              <tr><td><code>RBranch</code></td><td>GigabitEthernet0/0</td><td><strong>2026:5:7:FF::1</strong></td><td><strong>FE80::1</strong></td></tr>
+              <tr><td><code>BranchPCWired</code></td><td>FastEthernet0</td><td><strong>2026:5:7:FF::10</strong></td><td>Automatikus</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> RBranch = első érvényes: <code>::1</code> | BranchPCWired = 16.: <code>::10</code> (0x10 = 16)<br/>
+        ⚠️ SBranch, WRBranch, vezeték nélküli eszközök NEM használnak IPv6-ot.</p>
+
+        <h4>🔹 Branch WiFi — 53.63.73.96/27 (Bankfiók, vezeték nélküli)</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Port</th><th>IPv4-cím</th><th>Maszk</th><th>Megjegyzés</th></tr></thead>
+            <tbody>
+              <tr><td><code>WRBranch</code></td><td>LAN</td><td><strong>53.63.73.126</strong></td><td>255.255.255.224</td><td>Utolsó érvényes cím (/27) — Átjáró</td></tr>
+              <tr><td><code>BranchPCWireless</code></td><td>Wireless0</td><td colSpan="2">DHCP (WRBranch)</td><td>Dinamikus</td></tr>
+              <tr><td><code>BranchLaptop</code></td><td>Wireless0</td><td colSpan="2">DHCP (WRBranch)</td><td>Dinamikus</td></tr>
+              <tr><td><code>BranchTablet</code></td><td>Wireless0</td><td colSpan="2">DHCP (WRBranch)</td><td>Dinamikus</td></tr>
+              <tr><td><code>BranchSmartphone</code></td><td>Wireless0</td><td colSpan="2" className="text-danger">🚫 Nem módosítandó (letiltva)</td><td>Kitiltva a WiFi-ről</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Számítás:</strong> /27 = 255.255.255.224 → 30 használható cím (53.63.73.97–126).<br/>
+        WRBranch LAN (átjáró) = utolsó: <code>.126</code><br/>
+        ⚠️ Ez a hálózat NEM használ IPv6-ot.</p>
+      </DocSection>
+
+      <DocSection id="pt-device-config" title="🖥️ 11. Eszközkonfigurációk">
+        <div className="alert alert-success">
+          <strong>Használd ezeket a konfigurációkat</strong> a Packet Tracer feladat megoldásához.
+        </div>
+
+        <h4>🔸 RENB — Vállalati forgalomirányító (Központ)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="RENB alapkonfiguráció"
+          code={`! === ALAPBEÁLLÍTÁSOK ===
+enable
+configure terminal
+hostname RENB
+enable secret enapass
+service password-encryption
+banner motd #FIGYELEM! Illetéktelen belépés tilos!#
+
+! === KONZOL ÉS VTY ===
+line console 0
+ password conpass
+ login
+ exit
+line vty 0 4
+ password vty123
+ login
+ exit
+
+! === BELSŐ INTERFÉSZ (ENB LAN) ===
+interface GigabitEthernet0/0/0
+ description ENB LAN Gateway
+ ip address 50.60.70.254 255.255.255.128
+ ipv6 address FE80::1 link-local
+ ipv6 address 2026:5:7::1/64
+ no shutdown
+ exit
+
+! === KÜLSŐ INTERFÉSZ (WAN) — NEM MÓDOSÍTANDÓ ===
+! GigabitEthernet0/1/0 — meghagyva`}
+        />
+
+        <h4>🔸 RBranch — Fiók forgalomirányító (Budapest)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="RBranch alapkonfiguráció"
+          code={`! === ALAPBEÁLLÍTÁSOK ===
+enable
+configure terminal
+hostname RBranch
+enable secret rbranchenapass
+service password-encryption
+banner motd #FIGYELEM! Illetéktelen belépés tilos!#
+
+! === KONZOL ===
+line console 0
+ password rbranchconpass
+ login
+ exit
+
+! === BELSŐ INTERFÉSZ (Branch LAN) ===
+interface GigabitEthernet0/0
+ description Branch LAN Gateway
+ ip address 52.62.72.126 255.255.255.192
+ ipv6 address FE80::1 link-local
+ ipv6 address 2026:5:7:FF::1/64
+ no shutdown
+ exit
+
+! === KÜLSŐ INTERFÉSZ (WAN) — NEM MÓDOSÍTANDÓ ===
+! GigabitEthernet0/1/0 — meghagyva`}
+        />
+
+        <h4>🔸 SBranch — Fiók kapcsoló</h4>
+        <CodeBlock
+          lang="cisco"
+          label="SBranch menedzsment és SSH"
+          code={`! === ALAPBEÁLLÍTÁSOK ===
+enable
+configure terminal
+hostname SBranch
+enable secret enapass
+service password-encryption
+
+! === SSH BEÁLLÍTÁSA ===
+ip domain-name branch.local
+crypto key generate rsa
+! Válassz 1024 vagy 2048 bites kulcsot
+ip ssh version 2
+username admin secret sshpass
+line vty 0 4
+ transport input ssh
+ login local
+ exit
+
+! === MENEDZSMENT IP (VLAN 1) ===
+interface vlan 1
+ ip address 52.62.72.125 255.255.255.192
+ no shutdown
+ exit
+ip default-gateway 52.62.72.126`}
+        />
+
+        <h4>🔸 BranchPCWired — Vezetékes munkaállomás</h4>
+        <CodeBlock
+          lang="cisco"
+          label="BranchPCWired statikus IP"
+          code={`! IPv4 beállítás (asztali GUI-ban is megadható)
+ip 52.62.72.80 255.255.255.192 52.62.72.126
+
+! IPv6 beállítás
+ipv6 2026:5:7:FF::10/64
+ipv6-gateway FE80::1`}
+        />
+
+        <h4>🔸 ENB_DHCPServer — DHCP és DNS szerver</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DHCP szerver statikus IP"
+          code={`! IPv4 beállítás
+ip 50.60.70.176 255.255.255.128 50.60.70.254
+
+! IPv6 beállítás
+ipv6 2026:5:7::30/64
+ipv6-gateway FE80::1
+
+! DHCP szolgáltatás bekapcsolása
+! (Packet Tracerben a Services fülön)
+! Pool: ENB_LAN — 50.60.70.128/25
+! DHCP szerver IP: 50.60.70.176`}
+        />
+
+        <h4>🔸 WRBranch — Fiók WiFi router</h4>
+        <CodeBlock
+          lang="cisco"
+          label="WRBranch Internet + LAN port"
+          code={`! === INTERNET PORT (KÜLSŐ) ===
+! IP: 52.62.72.96 / 255.255.255.192
+! Gateway: 52.62.72.126
+
+! === LAN PORT (BELSŐ — Branch WiFi átjáró) ===
+! IP: 53.63.73.126 / 255.255.255.224
+! DHCP szerver: Bekapcsolva
+! DHCP pool: 53.63.73.96/27
+
+! === VEZETÉK NÉLKÜLI BEÁLLÍTÁS ===
+! SSID: branchwifi
+! Biztonság: WPA2-PSK
+! Jelszó: branchwifipass`}
+        />
+
+        <h4>🔸 OfficeWR — Irodai WiFi router (Admin)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="OfficeWR Internet + LAN port"
+          code={`! === INTERNET PORT (KÜLSŐ) ===
+! IP: Dinamikus (DHCP — ENB_DHCPServer-től)
+
+! === LAN PORT (BELSŐ — Office LAN átjáró) ===
+! IP: 51.61.71.174 / 255.255.255.240
+! DHCP szerver: Bekapcsolva
+! DHCP pool: 51.61.71.160/28
+! Fenntartott cím (AdminPC): 51.61.71.164`}
+        />
+      </DocSection>
+
+      <DocSection id="pt-credentials" title="🔑 12. Jelszavak és Hitelesítés">
+        <div className="alert alert-danger">
+          <strong>⚠️ Biztonsági figyelmeztetés:</strong> Ezek a jelszavak csak a Packet Tracer laborgyakorlathoz használandók. Éles környezetben mindig erős, egyedi jelszavakat használj!
+        </div>
+
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Jelszó típus</th><th>Jelszó</th><th>Megjegyzés</th></tr></thead>
+            <tbody>
+              <tr><td rowSpan="2"><code>RENB</code></td><td>Konzol vonali jelszó</td><td><code>conpass</code></td><td><code>line console 0</code></td></tr>
+              <tr><td>Titkosított privilegizált mód</td><td><code>enapass</code></td><td><code>enable secret</code></td></tr>
+              <tr><td rowSpan="2"><code>RBranch</code></td><td>Konzol vonali jelszó</td><td><code>rbranchconpass</code></td><td><code>line console 0</code></td></tr>
+              <tr><td>Titkosított privilegizált mód</td><td><code>rbranchenapass</code></td><td><code>enable secret</code></td></tr>
+              <tr><td rowSpan="2"><code>SBranch</code></td><td>Titkosított privilegizált mód</td><td><code>enapass</code></td><td><code>enable secret</code></td></tr>
+              <tr><td>SSH bejelentkezés</td><td>Felhasználó: <code>admin</code><br/>Jelszó: <code>sshpass</code></td><td><code>login local</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>🔐 SSH konfiguráció SBranch-en</h4>
+        <CodeBlock
+          lang="cisco"
+          label="SSH beállítása SBranch kapcsolón"
+          code={`! SSH konfiguráció SBranch számára
+SBranch(config)# ip domain-name branch.local
+SBranch(config)# crypto key generate rsa
+! Válassz legalább 1024 bites kulcsot
+SBranch(config)# ip ssh version 2
+SBranch(config)# username admin secret sshpass
+SBranch(config)# line vty 0 4
+SBranch(config-line)# transport input ssh
+SBranch(config-line)# login local
+SBranch(config-line)# exit`}
+        />
+      </DocSection>
+
+      <DocSection id="pt-wireless" title="📶 13. Vezeték nélküli Beállítások (WiFi)">
+        <h4>Vezeték nélküli hálózatok összesítése</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>SSID</th><th>Eszköz</th><th>Biztonság</th><th>Jelszó</th><th>Helyszín</th></tr></thead>
+            <tbody>
+              <tr><td><code>branchwifi</code></td><td>WRBranch</td><td>WPA2-PSK</td><td><code>branchwifipass</code></td><td>Budapest — Bankfiók</td></tr>
+              <tr><td><code>helpdeskwifi</code></td><td>HelpdeskWLC</td><td>WPA2-PSK</td><td><code>helpdeskwifipass</code></td><td>Eldorádó — Központ</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>🔸 WRBranch — Branch WiFi beállítás</h4>
+        <CodeBlock
+          lang="cisco"
+          label="WRBranch vezeték nélküli hálózat"
+          code={`! WRBranch WiFi konfiguráció (GUI-ban)
+! SSID: branchwifi
+! Security Mode: WPA2 Personal (PSK)
+! Passphrase: branchwifipass
+! Encryption: AES
+!
+! Internet (külső) port:
+!   IP: 52.62.72.96 / 255.255.255.192
+!   Gateway: 52.62.72.126
+!
+! LAN (belső) port:
+!   IP: 53.63.73.126 / 255.255.255.224
+!   DHCP: Bekapcsolva
+!
+! Engedélyezett kliensek:
+!   ✅ BranchPCWireless
+!   ✅ BranchLaptop
+!   ✅ BranchTablet
+!   ❌ BranchSmartphone (letiltva)`}
+        />
+
+        <h4>🔸 HelpdeskWLC — Központi WiFi vezérlő</h4>
+        <CodeBlock
+          lang="cisco"
+          label="HelpdeskWLC vezeték nélküli hálózat"
+          code={`! HelpdeskWLC WiFi konfiguráció
+! SSID: helpdeskwifi
+! Security Mode: WPA2 Personal (PSK)
+! Passphrase: helpdeskwifipass
+! Encryption: AES
+!
+! AP-k: 3702i HelpdeskAP1, HelpdeskAP2
+! Kliensek: HelpdeskLaptop1, HelpdeskLaptop2
+!    (DHCP IPv4: ENB_DHCPServer)
+!    (DHCP IPv6: RENB)`}
+        />
+
+        <h4>🔸 OfficeWR — Irodai WiFi router</h4>
+        <CodeBlock
+          lang="cisco"
+          label="OfficeWR adminisztrációs hálózat"
+          code={`! OfficeWR konfiguráció (GUI-ban)
+!
+! Internet (külső) port:
+!   IP: Dinamikus (DHCP kliens — ENB_DHCPServer)
+!
+! LAN (belső) port:
+!   IP: 51.61.71.174 / 255.255.255.240
+!   DHCP: Bekapcsolva
+!
+! Fenntartott DHCP cím:
+!   AdminPC → 51.61.71.164 (4. cím)
+!
+! ⚠️ TrustMe.com hozzáférés KORLÁTOZVA`}
+        />
+
+        <h4>📱 Kliens eszközök WiFi hozzárendelése</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Kapcsolódási pont</th><th>SSID</th><th>IPv4</th><th>IPv6</th></tr></thead>
+            <tbody>
+              <tr><td>HelpdeskLaptop1</td><td>HelpdeskAP1 (3702i)</td><td><code>helpdeskwifi</code></td><td>DHCP (ENB_DHCPServer)</td><td>DHCPv6 (RENB)</td></tr>
+              <tr><td>HelpdeskLaptop2</td><td>HelpdeskAP2 (3702i)</td><td><code>helpdeskwifi</code></td><td>DHCP (ENB_DHCPServer)</td><td>DHCPv6 (RENB)</td></tr>
+              <tr><td>BranchPCWireless</td><td>WRBranch</td><td><code>branchwifi</code></td><td>DHCP (WRBranch)</td><td>—</td></tr>
+              <tr><td>BranchLaptop</td><td>WRBranch</td><td><code>branchwifi</code></td><td>DHCP (WRBranch)</td><td>—</td></tr>
+              <tr><td>BranchTablet</td><td>WRBranch</td><td><code>branchwifi</code></td><td>DHCP (WRBranch)</td><td>—</td></tr>
+              <tr><td className="text-danger">BranchSmartphone</td><td className="text-danger">WRBranch</td><td className="text-danger"><code>branchwifi</code></td><td className="text-danger" colSpan="2">🚫 Kitiltva — Nem módosítandó</td></tr>
+              <tr><td>AdminPC</td><td>OfficeWR</td><td>—</td><td>DHCP lefoglalva: <code>51.61.71.164</code></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </DocSection>
+
+      <DocSection id="pt-routing-pt" title="🗺️ 14. Forgalomirányítás — ENB Hálózat">
+        <div className="alert alert-info">
+          <strong>Témakör:</strong> Statikus és dinamikus útvonalak az ENB topológiában.
+        </div>
+
+        <h4>Alapértelmezett útvonalak</h4>
+        <CodeBlock
+          lang="cisco"
+          label="Default route — Internet felé"
+          code={`! RENB: alapértelmezett útvonal az Internet felé
+RENB(config)# ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/1/0
+
+! RBranch: alapértelmezett útvonal az Internet felé
+RBranch(config)# ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/1/0`}
+        />
+
+        <h4>Statikus útvonalak a belső hálózatokhoz</h4>
+        <CodeBlock
+          lang="cisco"
+          label="Belső hálózatok elérése"
+          code={`! RENB: útvonal a Branch LAN (52.62.72.64/26) felé
+RENB(config)# ip route 52.62.72.64 255.255.255.192 GigabitEthernet0/1/0
+
+! RENB: útvonal a Branch WiFi (53.63.73.96/27) felé
+RENB(config)# ip route 53.63.73.96 255.255.255.224 GigabitEthernet0/1/0
+
+! RENB: útvonal az Office LAN (51.61.71.160/28) felé
+RENB(config)# ip route 51.61.71.160 255.255.255.240 GigabitEthernet0/0/0
+
+! RBranch: alapértelmezett + belső útvonalak
+RBranch(config)# ip route 50.60.70.128 255.255.255.128 GigabitEthernet0/1/0
+RBranch(config)# ip route 51.61.71.160 255.255.255.240 GigabitEthernet0/1/0`}
+        />
+
+        <h4>DHCP konfiguráció — RENB (IPv6 a Helpdesk klienseknek)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DHCPv6 pool Helpdesk kliensekhez"
+          code={`! IPv6 DHCP pool a Helpdesk laptopoknak
+RENB(config)# ipv6 dhcp pool HELPDESK-IPV6
+RENB(config-dhcpv6)# address prefix 2026:5:7::/64
+RENB(config-dhcpv6)# dns-server 2026:5:7::30
+RENB(config-dhcpv6)# domain-name enb.local
+RENB(config-dhcpv6)# exit
+
+! Interfészen DHCPv6 engedélyezése
+RENB(config)# interface GigabitEthernet0/0/0
+RENB(config-if)# ipv6 dhcp server HELPDESK-IPV6
+RENB(config-if)# ipv6 nd managed-config-flag
+RENB(config-if)# exit`}
+        />
+
+        <h4>Ellenőrző parancsok</h4>
+        <CodeBlock
+          lang="cisco"
+          label="Forgalomirányítás ellenőrzése"
+          code={`RENB# show ip route                ! Teljes routing tábla
+RENB# show ip route static          ! Statikus útvonalak
+RENB# show ipv6 route               ! IPv6 routing tábla
+RENB# ping 52.62.72.80              ! BranchPCWired elérése
+RENB# ping 51.61.71.164             ! AdminPC elérése
+RBranch# show ip route
+RBranch# ping 50.60.70.254          ! RENB belső port
+SBranch# show ip interface brief    ! Interfészek ellenőrzése
+SBranch# show vlan brief            ! VLAN ellenőrzése`}
+        />
+      </DocSection>
+
+      <DocSection id="pt-acl-pt" title="🔒 15. ACL és Biztonság — ENB Hálózat">
+        <div className="alert alert-info">
+          <strong>Témakör:</strong> Hozzáférési listák a Branch okostelefon letiltásához és egyéb korlátozásokhoz.
+        </div>
+
+        <h4>BranchSmartphone letiltása MAC-cím alapján (WRBranch)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="MAC-szűrés WRBranch WiFi routeren"
+          code={`! WRBranch GUI-ban: Wireless → Wireless MAC Filter
+! MAC Filter: Enabled
+! Filter Rule: Allow (whitelist) vagy Block (blacklist)
+! 
+! BranchSmartphone MAC-címének letiltása:
+!   VAGY: csak a megadott MAC-ek engedélyezése
+!   VAGY: a Smartphone MAC feketelistára tétele`}
+        />
+
+        <h4>TrustMe.com korlátozása az Office LAN felől</h4>
+        <CodeBlock
+          lang="cisco"
+          label="ACL — TrustMe.com letiltása"
+          code={`! Extended ACL a TrustMe.com elérésének tiltására
+! (ha az OfficeWR vagy RENB támogatja)
+
+! Feltételezve, hogy TrustMe.com IP-je ismert (pl. 64.100.0.100)
+RENB(config)# access-list 101 deny tcp 51.61.71.160 0.0.0.15 host 64.100.0.100 eq 80
+RENB(config)# access-list 101 deny tcp 51.61.71.160 0.0.0.15 host 64.100.0.100 eq 443
+RENB(config)# access-list 101 permit ip any any
+
+! Alkalmazás a belső interfészre (bejövő irány)
+RENB(config)# interface GigabitEthernet0/0/0
+RENB(config-if)# ip access-group 101 in`}
+        />
+
+        <h4>Biztonsági összefoglaló</h4>
+        <div className="table-responsive">
+          <table className="table table-bordered table-sm">
+            <thead className="table-light"><tr><th>Eszköz</th><th>Biztonsági elem</th><th>Részletek</th></tr></thead>
+            <tbody>
+              <tr><td>RENB</td><td><code>enable secret</code></td><td><code>enapass</code></td></tr>
+              <tr><td>RBranch</td><td><code>enable secret</code></td><td><code>rbranchenapass</code></td></tr>
+              <tr><td>SBranch</td><td>SSH</td><td><code>admin / sshpass</code></td></tr>
+              <tr><td>WRBranch</td><td>WPA2-PSK</td><td><code>branchwifipass</code></td></tr>
+              <tr><td>HelpdeskWLC</td><td>WPA2-PSK</td><td><code>helpdeskwifipass</code></td></tr>
+              <tr><td>BranchSmartphone</td><td>MAC-szűrés</td><td>Kitiltva a <code>branchwifi</code> hálózatról</td></tr>
+              <tr><td>Office LAN</td><td>ACL</td><td>TrustMe.com hozzáférés korlátozása</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </DocSection>
+
+      <DocSection id="pt-dhcp-setup" title="⚙️ 16. DHCP és DNS Beállítások">
+        <div className="alert alert-info">
+          <strong>Témakör:</strong> DHCP szerver konfiguráció ENB_DHCPServer és WRBranch eszközökön.
+        </div>
+
+        <h4>ENB_DHCPServer — Központi DHCP (IPv4)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DHCP pool az ENB LAN-hoz"
+          code={`! ENB_DHCPServer (Packet Tracer GUI: Services → DHCP)
+!
+! Pool neve: ENB_LAN
+! Default Gateway: 50.60.70.254
+! DNS Server: 50.60.70.176
+! Start IP: 50.60.70.129
+! Subnet Mask: 255.255.255.128
+! Max Users: 100
+!
+! Kiosztandó kliensek:
+!   - OfficeWR Internet port (dinamikus)
+!   - HelpdeskLaptop1 (dinamikus)
+!   - HelpdeskLaptop2 (dinamikus)`}
+        />
+
+        <h4>WRBranch — Branch DHCP (IPv4)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DHCP pool a Branch WiFi-hez"
+          code={`! WRBranch GUI: Setup → Network Setup
+!
+! Router IP (LAN): 53.63.73.126
+! Subnet Mask: 255.255.255.224
+! DHCP Server: Enabled
+! Start IP Address: 53.63.73.97
+! Maximum Users: 25
+!
+! Kiosztandó kliensek:
+!   - BranchPCWireless
+!   - BranchLaptop
+!   - BranchTablet
+!
+! ⚠️ BranchSmartphone — NEM kap IP-t (letiltva)`}
+        />
+
+        <h4>OfficeWR — Office DHCP (IPv4)</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DHCP pool az Office LAN-hoz"
+          code={`! OfficeWR GUI: Setup → Network Setup
+!
+! Router IP (LAN): 51.61.71.174
+! Subnet Mask: 255.255.255.240
+! DHCP Server: Enabled
+! Start IP Address: 51.61.71.161
+! Maximum Users: 10
+!
+! DHCP Reservation (fenntartott cím):
+!   AdminPC → 51.61.71.164
+!   (a címtartomány 4. érvényes címe)`}
+        />
+
+        <h4>DNS beállítások</h4>
+        <CodeBlock
+          lang="cisco"
+          label="DNS szerver konfiguráció"
+          code={`! ENB_DHCPServer (Packet Tracer GUI: Services → DNS)
+!
+! DNS Service: ON
+! 
+! Névfeloldások:
+!   enb.nhely.hu       → 50.60.70.254 (RENB belső)
+!   branch.enb.nhely.hu → 52.62.72.126 (RBranch belső)
+!
+! Külső DNS (Internet):
+!   DNSServer — az Internet felhőben található`}
+        />
+      </DocSection>
+
+      <DocSection id="pt-checklist" title="✅ 17. Konfigurációs Ellenőrzőlista">
+        <div className="alert alert-success">
+          <strong>Végigmentél mindenen?</strong> Használd ezt a listát a teljes konfiguráció ellenőrzéséhez.
+        </div>
+
+        <h4>🔲 Alapbeállítások</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ RENB: hostname, enable secret (<code>enapass</code>), konzol jelszó (<code>conpass</code>), banner</li>
+          <li className="list-group-item">☐ RBranch: hostname, enable secret (<code>rbranchenapass</code>), konzol jelszó (<code>rbranchconpass</code>), banner</li>
+          <li className="list-group-item">☐ SBranch: hostname, enable secret (<code>enapass</code>), SSH (<code>admin/sshpass</code>)</li>
+          <li className="list-group-item">☐ Minden eszközön: <code>service password-encryption</code></li>
+        </ul>
+
+        <h4>🔲 IP-címzés — ENB LAN (50.60.70.128/25)</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ RENB Gig0/0/0: <strong>50.60.70.254/25</strong></li>
+          <li className="list-group-item">☐ RENB Gig0/0/0 IPv6: <strong>2026:5:7::1/64</strong>, link-local <strong>FE80::1</strong></li>
+          <li className="list-group-item">☐ ENB_DHCPServer: <strong>50.60.70.176/25</strong>, IPv6: <strong>2026:5:7::30/64</strong></li>
+          <li className="list-group-item">☐ RENB Gig0/1/0: ⚠️ NEM módosítva</li>
+        </ul>
+
+        <h4>🔲 IP-címzés — Branch LAN (52.62.72.64/26)</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ RBranch Gig0/0: <strong>52.62.72.126/26</strong></li>
+          <li className="list-group-item">☐ RBranch Gig0/0 IPv6: <strong>2026:5:7:FF::1/64</strong>, link-local <strong>FE80::1</strong></li>
+          <li className="list-group-item">☐ SBranch VLAN1: <strong>52.62.72.125/26</strong></li>
+          <li className="list-group-item">☐ BranchPCWired: <strong>52.62.72.80/26</strong>, IPv6: <strong>2026:5:7:FF::10/64</strong></li>
+          <li className="list-group-item">☐ WRBranch Internet: <strong>52.62.72.96/26</strong></li>
+          <li className="list-group-item">☐ RBranch Gig0/1/0: ⚠️ NEM módosítva</li>
+        </ul>
+
+        <h4>🔲 IP-címzés — Branch WiFi (53.63.73.96/27)</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ WRBranch LAN: <strong>53.63.73.126/27</strong></li>
+          <li className="list-group-item">☐ BranchPCWireless, BranchLaptop, BranchTablet: DHCP</li>
+          <li className="list-group-item">☐ BranchSmartphone: 🚫 NEM módosítva</li>
+        </ul>
+
+        <h4>🔲 IP-címzés — Office LAN (51.61.71.160/28)</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ OfficeWR Internet: DHCP (ENB_DHCPServer-től)</li>
+          <li className="list-group-item">☐ OfficeWR LAN: <strong>51.61.71.174/28</strong></li>
+          <li className="list-group-item">☐ AdminPC: DHCP fenntartva <strong>51.61.71.164</strong></li>
+        </ul>
+
+        <h4>🔲 WiFi és Biztonság</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ WRBranch SSID: <code>branchwifi</code>, WPA2-PSK: <code>branchwifipass</code></li>
+          <li className="list-group-item">☐ HelpdeskWLC SSID: <code>helpdeskwifi</code>, WPA2-PSK: <code>helpdeskwifipass</code></li>
+          <li className="list-group-item">☐ BranchSmartphone letiltva a branchwifi hálózatról</li>
+          <li className="list-group-item">☐ TrustMe.com korlátozása Office LAN felől</li>
+        </ul>
+
+        <h4>🔲 Végellenőrzés</h4>
+        <ul className="list-group mb-3">
+          <li className="list-group-item">☐ <code>show ip interface brief</code> — minden interfész <strong>up/up</strong>?</li>
+          <li className="list-group-item">☐ <code>ping</code> tesztek a hálózatok között</li>
+          <li className="list-group-item">☐ <code>show running-config</code> — konfiguráció átnézése</li>
+          <li className="list-group-item">☐ <code>copy running-config startup-config</code> — mentés</li>
+          <li className="list-group-item">☐ WiFi kliensek csatlakoznak és kapnak IP-címet?</li>
+          <li className="list-group-item">☐ BranchSmartphone valóban nem fér hozzá a hálózathoz?</li>
+        </ul>
+      </DocSection>
     </>
   );
 }

@@ -221,6 +221,85 @@ const packetTracerTree = [
       { id: 'pt-reference', label: 'Hasznos linkek', anchor: 'pt-reference' },
     ],
   },
+  {
+    id: 'pt-topology', icon: '🏗️', label: 'ENB Vállalati Hálózat — Topológia',
+    searchText: 'ENB bank fiok kozponti iroda eldorado budapest helpdesk RENB RBranch SBranch',
+    children: [
+      { id: 'pt-topology', label: 'Helyszínek és eszközök', anchor: 'pt-topology' },
+      { id: 'pt-topology', label: 'Hálózati áttekintés', anchor: 'pt-topology' },
+    ],
+  },
+  {
+    id: 'pt-addressing', icon: '📊', label: 'Címkiosztási Terv — ENB',
+    searchText: '50.60.70.128 51.61.71.160 52.62.72.64 53.63.73.96 2026:5:7 IP cim subnet mask',
+    children: [
+      { id: 'pt-addressing', label: 'ENB LAN címek (50.60.70.128/25)', anchor: 'pt-addressing' },
+      { id: 'pt-addressing', label: 'Office LAN címek (51.61.71.160/28)', anchor: 'pt-addressing' },
+      { id: 'pt-addressing', label: 'Branch LAN címek (52.62.72.64/26)', anchor: 'pt-addressing' },
+      { id: 'pt-addressing', label: 'Branch WiFi címek (53.63.73.96/27)', anchor: 'pt-addressing' },
+    ],
+  },
+  {
+    id: 'pt-device-config', icon: '🖥️', label: 'Eszközkonfigurációk — ENB',
+    searchText: 'RENB RBranch SBranch BranchPCWired ENB_DHCPServer WRBranch OfficeWR konfig',
+    children: [
+      { id: 'pt-device-config', label: 'RENB — Vállalati forgalomirányító', anchor: 'pt-device-config' },
+      { id: 'pt-device-config', label: 'RBranch — Fiók forgalomirányító', anchor: 'pt-device-config' },
+      { id: 'pt-device-config', label: 'SBranch — Fiók kapcsoló + SSH', anchor: 'pt-device-config' },
+      { id: 'pt-device-config', label: 'Végberendezések + WiFi routerek', anchor: 'pt-device-config' },
+    ],
+  },
+  {
+    id: 'pt-credentials', icon: '🔑', label: 'Jelszavak — ENB',
+    searchText: 'conpass enapass rbranchconpass rbranchenapass sshpass admin jelszo',
+    children: [
+      { id: 'pt-credentials', label: 'Jelszó táblázat', anchor: 'pt-credentials' },
+      { id: 'pt-credentials', label: 'SSH konfiguráció SBranch-en', anchor: 'pt-credentials' },
+    ],
+  },
+  {
+    id: 'pt-wireless', icon: '📶', label: 'WiFi Beállítások — ENB',
+    searchText: 'branchwifi helpdeskwifi WPA2 PSK SSID branchwifipass helpdeskwifipass',
+    children: [
+      { id: 'pt-wireless', label: 'WRBranch — Branch WiFi', anchor: 'pt-wireless' },
+      { id: 'pt-wireless', label: 'HelpdeskWLC — Központi WiFi', anchor: 'pt-wireless' },
+      { id: 'pt-wireless', label: 'OfficeWR — Irodai WiFi', anchor: 'pt-wireless' },
+      { id: 'pt-wireless', label: 'Kliens hozzárendelések', anchor: 'pt-wireless' },
+    ],
+  },
+  {
+    id: 'pt-routing-pt', icon: '🗺️', label: 'Forgalomirányítás — ENB',
+    searchText: 'default route static ip route 0.0.0.0 DHCPv6 IPv6 pool HELPDESK',
+    children: [
+      { id: 'pt-routing-pt', label: 'Alapértelmezett + statikus útvonalak', anchor: 'pt-routing-pt' },
+      { id: 'pt-routing-pt', label: 'DHCPv6 Helpdesk klienseknek', anchor: 'pt-routing-pt' },
+    ],
+  },
+  {
+    id: 'pt-acl-pt', icon: '🔒', label: 'ACL és Biztonság — ENB',
+    searchText: 'access-list TrustMe.com MAC filter smartphone block letiltas',
+    children: [
+      { id: 'pt-acl-pt', label: 'BranchSmartphone letiltása', anchor: 'pt-acl-pt' },
+      { id: 'pt-acl-pt', label: 'TrustMe.com korlátozása', anchor: 'pt-acl-pt' },
+    ],
+  },
+  {
+    id: 'pt-dhcp-setup', icon: '⚙️', label: 'DHCP és DNS — ENB',
+    searchText: 'ENB_DHCPServer DHCP pool DNS enb.nhely.hu WRBranch OfficeWR',
+    children: [
+      { id: 'pt-dhcp-setup', label: 'ENB_DHCPServer — Központi DHCP', anchor: 'pt-dhcp-setup' },
+      { id: 'pt-dhcp-setup', label: 'WRBranch — Branch DHCP', anchor: 'pt-dhcp-setup' },
+      { id: 'pt-dhcp-setup', label: 'OfficeWR — Office DHCP', anchor: 'pt-dhcp-setup' },
+      { id: 'pt-dhcp-setup', label: 'DNS névfeloldás', anchor: 'pt-dhcp-setup' },
+    ],
+  },
+  {
+    id: 'pt-checklist', icon: '✅', label: 'Ellenőrzőlista — ENB',
+    searchText: 'checklist ellenorzes konfiguracio kesz van',
+    children: [
+      { id: 'pt-checklist', label: 'Teljes konfigurációs ellenőrzőlista', anchor: 'pt-checklist' },
+    ],
+  },
 ];
 
 /* ---- Scroll-spy ---- */
